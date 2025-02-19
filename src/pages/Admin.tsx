@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Input } from "@/components/ui/input";
@@ -15,14 +14,12 @@ const Admin = () => {
     password: "",
   });
   
-  // Estado para gerenciar frentes
   const [novaFrente, setNovaFrente] = useState({
     titulo: "",
     descricao: "",
     imagem: null as File | null,
   });
   
-  // Estado para armazenar frentes já criadas
   const [frentes, setFrentes] = useState<Array<{
     id: number;
     titulo: string;
@@ -30,7 +27,6 @@ const Admin = () => {
     imagem: string;
   }>>([]);
 
-  // Estado para a seção sobre
   const [sobre, setSobre] = useState({
     texto: "",
     imagem: null as File | null,
@@ -38,7 +34,7 @@ const Admin = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (credentials.username === "admin" && credentials.password === "admin") {
+    if (credentials.username === "root" && credentials.password === "Ftec@148750W559rt") {
       setIsAuthenticated(true);
     }
   };
@@ -65,7 +61,6 @@ const Admin = () => {
 
   const handleSobreSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implementar salvamento do sobre
     console.log("Salvando sobre:", sobre);
   };
 
@@ -125,7 +120,6 @@ const Admin = () => {
               <TabsTrigger value="inicio">Início</TabsTrigger>
             </TabsList>
             
-            {/* Aba de Frentes */}
             <TabsContent value="frentes">
               <div className="mt-4 space-y-6">
                 <div className="rounded-lg border p-4">
@@ -195,7 +189,6 @@ const Admin = () => {
               </div>
             </TabsContent>
 
-            {/* Aba Sobre */}
             <TabsContent value="sobre">
               <div className="mt-4 space-y-6">
                 <form onSubmit={handleSobreSubmit} className="space-y-4">
@@ -227,15 +220,12 @@ const Admin = () => {
               </div>
             </TabsContent>
 
-            {/* Aba Início */}
             <TabsContent value="inicio">
               <div className="mt-4">
                 <h3 className="text-lg font-semibold">Editar Início</h3>
-                {/* TODO: Implementar edição do início */}
               </div>
             </TabsContent>
 
-            {/* Aba Perfis */}
             <TabsContent value="perfis">
               <div className="mt-4">
                 <h3 className="text-lg font-semibold">Gerenciar Perfis</h3>
