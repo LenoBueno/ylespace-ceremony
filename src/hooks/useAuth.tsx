@@ -71,7 +71,7 @@ export const useAuth = () => {
         password,
       });
       if (error) throw error;
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       throw error;
     }
