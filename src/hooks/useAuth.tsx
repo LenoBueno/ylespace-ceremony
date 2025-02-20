@@ -16,6 +16,7 @@ export const useAuth = () => {
   useEffect(() => {
     // Fetch the current session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log("Current session:", session);
       setUser(session?.user ?? null);
       if (session?.user) {
         fetchProfile(session.user.id);
@@ -28,9 +29,11 @@ export const useAuth = () => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log("Auth state changed:", event, session);
       setUser(session?.user ?? null);
       if (session?.user) {
         await fetchProfile(session.user.id);
+        navigate("/home");
       } else {
         setProfile(null);
         setLoading(false);
@@ -40,7 +43,7 @@ export const useAuth = () => {
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, [navigate]);
 
   const fetchProfile = async (userId: string) => {
     try {
@@ -54,6 +57,7 @@ export const useAuth = () => {
         console.error("Error fetching profile:", error);
         setProfile(null);
       } else {
+        console.log("Profile fetched:", data);
         setProfile(data);
       }
     } catch (error) {
@@ -66,13 +70,21 @@ export const useAuth = () => {
 
   const login = async (email: string, password: string) => {
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      console.log("Attempting login for:", email);
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
-      if (error) throw error;
-      navigate("/home");
+      
+      if (error) {
+        console.error("Login error:", error);
+        throw error;
+      }
+      
+      console.log("Login successful:", data);
+      // O redirecionamento será feito pelo onAuthStateChange
     } catch (error) {
+      console.error("Login error:", error);
       throw error;
     }
   };
