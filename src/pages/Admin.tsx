@@ -1,14 +1,13 @@
+
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import LoginForm from "@/components/admin/LoginForm";
 import FrenteForm from "@/components/admin/FrenteForm";
 import FrentesList from "@/components/admin/FrentesList";
 import SobreForm from "@/components/admin/SobreForm";
 
 const Admin = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [novaFrente, setNovaFrente] = useState({
     titulo: "",
     descricao: "",
@@ -26,12 +25,6 @@ const Admin = () => {
     texto: "",
     imagem: null as File | null,
   });
-
-  const handleLogin = (username: string, password: string) => {
-    if (username === "root" && password === "Ftec@148750W559rt") {
-      setIsAuthenticated(true);
-    }
-  };
 
   const handleSalvarFrente = (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,10 +44,6 @@ const Admin = () => {
     e.preventDefault();
     console.log("Salvando sobre:", sobre);
   };
-
-  if (!isAuthenticated) {
-    return <LoginForm onLogin={handleLogin} />;
-  }
 
   return (
     <Layout>

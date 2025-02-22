@@ -35,6 +35,16 @@ const Header = () => {
                 Início
               </Link>
             </li>
+            <li>
+              <Link to="/sobre" className="animated-underline">
+                Sobre
+              </Link>
+            </li>
+            <li>
+              <Link to="/frentes" className="animated-underline">
+                Frentes
+              </Link>
+            </li>
             {isAdmin && (
               <li>
                 <Link to="/admin" className="animated-underline">
