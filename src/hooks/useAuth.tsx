@@ -22,6 +22,7 @@ export const useAuth = () => {
         fetchProfile(session.user.id);
       } else {
         setLoading(false);
+        navigate("/login");
       }
     });
 
@@ -37,6 +38,7 @@ export const useAuth = () => {
       } else {
         setProfile(null);
         setLoading(false);
+        navigate("/login");
       }
     });
 
