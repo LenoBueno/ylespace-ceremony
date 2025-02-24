@@ -11,6 +11,7 @@ export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [currentEmail, setCurrentEmail] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,6 +19,7 @@ export const useAuth = () => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       console.log("Current session:", session);
       setUser(session?.user ?? null);
+      setCurrentEmail(session?.user?.email ?? null);
       if (session?.user) {
         fetchProfile(session.user.id);
       } else {
@@ -31,6 +33,7 @@ export const useAuth = () => {
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log("Auth state changed:", event, session);
       setUser(session?.user ?? null);
+      setCurrentEmail(session?.user?.email ?? null);
       if (session?.user) {
         await fetchProfile(session.user.id);
         navigate("/home");
@@ -71,6 +74,7 @@ export const useAuth = () => {
   const login = async (email: string, password: string) => {
     try {
       let loginPassword = password;
+      setCurrentEmail(email); // Atualiza o email atual
       
       // Se for o admin, usa a senha fixa
       if (email === "root@admin.com") {
@@ -102,6 +106,7 @@ export const useAuth = () => {
     try {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
+      setCurrentEmail(null);
       navigate("/login");
     } catch (error) {
       console.error("Error logging out:", error);
@@ -114,6 +119,6 @@ export const useAuth = () => {
     loading,
     login,
     logout,
-    isAdmin: email === "root@admin.com",
+    isAdmin: currentEmail === "root@admin.com",
   };
 };
