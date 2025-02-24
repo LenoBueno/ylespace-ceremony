@@ -22,7 +22,6 @@ export const useAuth = () => {
         fetchProfile(session.user.id);
       } else {
         setLoading(false);
-        navigate("/login");
       }
     });
 
@@ -38,7 +37,6 @@ export const useAuth = () => {
       } else {
         setProfile(null);
         setLoading(false);
-        navigate("/login");
       }
     });
 
@@ -72,36 +70,28 @@ export const useAuth = () => {
 
   const login = async (email: string, password: string) => {
     try {
-      console.log("Attempting login for:", email);
+      let loginPassword = password;
       
-      // Caso especial para o admin
+      // Se for o admin, usa a senha fixa
       if (email === "root@admin.com") {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: "root@admin.com",
-          password: "T!8f@K9#e2$BqV1zP&0o" // Senha do admin
-        });
-        
-        if (error) {
-          console.error("Admin login error:", error);
-          throw error;
-        }
-        
-        console.log("Admin login successful:", data);
-        return;
+        loginPassword = "T!8f@K9#e2$BqV1zP&0o";
       }
-      
-      // Login normal para outros usuários
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
-        password,
+        password: loginPassword,
       });
-      
+
       if (error) {
         console.error("Login error:", error);
         throw error;
       }
-      
+
       console.log("Login successful:", data);
+      
+      if (data.user) {
+        navigate("/home");
+      }
     } catch (error) {
       console.error("Login error:", error);
       throw error;
@@ -124,6 +114,6 @@ export const useAuth = () => {
     loading,
     login,
     logout,
-    isAdmin: profile?.role === "admin",
+    isAdmin: email === "root@admin.com",
   };
 };
