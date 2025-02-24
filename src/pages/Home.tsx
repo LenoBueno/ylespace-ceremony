@@ -35,14 +35,14 @@ const Home = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-gradient-radial from-[#ad0b2b] to-[#9a001c] py-20">
+      <div className="min-h-screen bg-white py-20">
         <div className="container mx-auto px-4">
           {profile ? (
             <div className="flex justify-center mt-16">
               <ProfileCard profile={profile} />
             </div>
           ) : (
-            <p className="text-center text-white">Carregando informações do perfil...</p>
+            <p className="text-center text-black">Carregando informações do perfil...</p>
           )}
         </div>
       </div>

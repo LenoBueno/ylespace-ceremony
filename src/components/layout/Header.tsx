@@ -2,13 +2,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { logout, isAdmin } = useAuth();
 
   const handleLogout = () => {
-    // For now, just navigate to login
-    navigate("/login");
+    logout();
   };
 
   return (
@@ -30,25 +31,27 @@ const Header = () => {
         <nav className="mt-4">
           <ul className="flex space-x-6">
             <li>
-              <Link to="/" className="animated-underline">
+              <Link to="/home" className="animated-underline">
                 Início
               </Link>
             </li>
             <li>
-              <Link to="/profile" className="animated-underline">
-                Perfil
-              </Link>
-            </li>
-            <li>
-              <Link to="/fronts" className="animated-underline">
-                Frentes
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" className="animated-underline">
+              <Link to="/sobre" className="animated-underline">
                 Sobre
               </Link>
             </li>
+            <li>
+              <Link to="/frentes" className="animated-underline">
+                Frentes
+              </Link>
+            </li>
+            {isAdmin && (
+              <li>
+                <Link to="/admin" className="animated-underline">
+                  Admin
+                </Link>
+              </li>
+            )}
           </ul>
         </nav>
       </div>
