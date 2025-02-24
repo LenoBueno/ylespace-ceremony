@@ -1,0 +1,78 @@
+
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+
+interface ErvaFormProps {
+  novaErva: {
+    titulo: string;
+    subtitulo: string;
+    texto: string;
+    imagem: File | null;
+  };
+  onErvaChange: (erva: { titulo: string; subtitulo: string; texto: string; imagem: File | null }) => void;
+  onSubmit: (e: React.FormEvent) => void;
+}
+
+const ErvasForm = ({ novaErva, onErvaChange, onSubmit }: ErvaFormProps) => {
+  return (
+    <form onSubmit={onSubmit} className="space-y-4">
+      <div>
+        <Label htmlFor="titulo">Título</Label>
+        <Input
+          id="titulo"
+          value={novaErva.titulo}
+          onChange={(e) =>
+            onErvaChange({ ...novaErva, titulo: e.target.value })
+          }
+          maxLength={100}
+        />
+      </div>
+      <div>
+        <Label htmlFor="subtitulo">Subtítulo</Label>
+        <Input
+          id="subtitulo"
+          value={novaErva.subtitulo}
+          onChange={(e) =>
+            onErvaChange({ ...novaErva, subtitulo: e.target.value })
+          }
+          maxLength={200}
+        />
+      </div>
+      <div>
+        <Label htmlFor="texto">Texto</Label>
+        <Textarea
+          id="texto"
+          value={novaErva.texto}
+          onChange={(e) =>
+            onErvaChange({ ...novaErva, texto: e.target.value })
+          }
+          maxLength={2000}
+          className="min-h-[200px]"
+        />
+        <p className="mt-1 text-sm text-gray-500">
+          {novaErva.texto.length}/2000 caracteres
+        </p>
+      </div>
+      <div>
+        <Label htmlFor="imagem">Imagem</Label>
+        <Input
+          id="imagem"
+          type="file"
+          accept="image/*"
+          onChange={(e) =>
+            e.target.files &&
+            onErvaChange({ ...novaErva, imagem: e.target.files[0] })
+          }
+        />
+      </div>
+      <Button type="submit" className="w-full">
+        Salvar Erva
+      </Button>
+    </form>
+  );
+};
+
+export default ErvasForm;

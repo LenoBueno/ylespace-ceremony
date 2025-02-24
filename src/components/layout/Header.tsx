@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { logout, isAdmin } = useAuth();
+  const { logout } = useAuth();
 
   const handleLogout = () => {
     logout();
@@ -45,13 +45,11 @@ const Header = () => {
                 Frentes
               </Link>
             </li>
-            {isAdmin && (
-              <li>
-                <Link to="/admin" className="animated-underline">
-                  Admin
-                </Link>
-              </li>
-            )}
+            <li>
+              <Link to="/ervas" className="animated-underline">
+                Ervas
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>

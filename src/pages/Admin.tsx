@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import FrenteForm from "@/components/admin/FrenteForm";
 import FrentesList from "@/components/admin/FrentesList";
 import SobreForm from "@/components/admin/SobreForm";
+import ErvasForm from "@/components/admin/ErvasForm";
 
 const Admin = () => {
   const [novaFrente, setNovaFrente] = useState({
@@ -13,11 +14,26 @@ const Admin = () => {
     descricao: "",
     imagem: null as File | null,
   });
+
+  const [novaErva, setNovaErva] = useState({
+    titulo: "",
+    subtitulo: "",
+    texto: "",
+    imagem: null as File | null,
+  });
   
   const [frentes, setFrentes] = useState<Array<{
     id: number;
     titulo: string;
     descricao: string;
+    imagem: string;
+  }>>([]);
+
+  const [ervas, setErvas] = useState<Array<{
+    id: number;
+    titulo: string;
+    subtitulo: string;
+    texto: string;
     imagem: string;
   }>>([]);
 
@@ -40,6 +56,21 @@ const Admin = () => {
     }
   };
 
+  const handleSalvarErva = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (novaErva.titulo && novaErva.subtitulo && novaErva.texto && novaErva.imagem) {
+      const novaErvaObj = {
+        id: Date.now(),
+        titulo: novaErva.titulo,
+        subtitulo: novaErva.subtitulo,
+        texto: novaErva.texto,
+        imagem: URL.createObjectURL(novaErva.imagem),
+      };
+      setErvas([...ervas, novaErvaObj]);
+      setNovaErva({ titulo: "", subtitulo: "", texto: "", imagem: null });
+    }
+  };
+
   const handleSobreSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Salvando sobre:", sobre);
@@ -53,13 +84,27 @@ const Admin = () => {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="frentes" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="perfis">Perfis</TabsTrigger>
               <TabsTrigger value="frentes">Frentes</TabsTrigger>
               <TabsTrigger value="sobre">Sobre</TabsTrigger>
               <TabsTrigger value="inicio">Início</TabsTrigger>
+              <TabsTrigger value="ervas">Ervas</TabsTrigger>
             </TabsList>
             
+            <TabsContent value="ervas">
+              <div className="mt-4 space-y-6">
+                <div className="rounded-lg border p-4">
+                  <h3 className="mb-4 text-lg font-semibold">Adicionar Nova Erva</h3>
+                  <ErvasForm
+                    novaErva={novaErva}
+                    onErvaChange={setNovaErva}
+                    onSubmit={handleSalvarErva}
+                  />
+                </div>
+              </div>
+            </TabsContent>
+
             <TabsContent value="frentes">
               <div className="mt-4 space-y-6">
                 <div className="rounded-lg border p-4">
