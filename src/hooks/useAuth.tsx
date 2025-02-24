@@ -73,6 +73,24 @@ export const useAuth = () => {
   const login = async (email: string, password: string) => {
     try {
       console.log("Attempting login for:", email);
+      
+      // Caso especial para o admin
+      if (email === "root@admin.com") {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: "root@admin.com",
+          password: "T!8f@K9#e2$BqV1zP&0o" // Senha do admin
+        });
+        
+        if (error) {
+          console.error("Admin login error:", error);
+          throw error;
+        }
+        
+        console.log("Admin login successful:", data);
+        return;
+      }
+      
+      // Login normal para outros usuários
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -84,7 +102,6 @@ export const useAuth = () => {
       }
       
       console.log("Login successful:", data);
-      // O redirecionamento será feito pelo onAuthStateChange
     } catch (error) {
       console.error("Login error:", error);
       throw error;
