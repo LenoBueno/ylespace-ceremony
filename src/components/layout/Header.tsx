@@ -16,9 +16,9 @@ const Header = () => {
     <header className="w-full border-b border-border bg-background">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-semibold">
+          <Link to="/home" className="text-xl font-semibold hover:opacity-80 transition-opacity">
             Ylê Axé Xangô & Oxum
-          </h1>
+          </Link>
           <Button
             variant="ghost"
             size="icon"
@@ -36,12 +36,12 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link to="/sobre" className="animated-underline">
+              <Link to="/about" className="animated-underline">
                 Sobre
               </Link>
             </li>
             <li>
-              <Link to="/frentes" className="animated-underline">
+              <Link to="/fronts" className="animated-underline">
                 Frentes
               </Link>
             </li>
