@@ -21,44 +21,142 @@ const Ervas = () => {
       const ervasLocais: Erva[] = [
         {
           id: 1,
-          titulo: "Arruda",
-          subtitulo: "Ruta graveolens",
-          texto: "Erva sagrada associada à proteção espiritual",
+          titulo: "Alecrim",
+          subtitulo: "Rosmarinus officinalis",
+          texto: "Purificação e proteção.",
           imagem: "/placeholder.svg"
         },
         {
           id: 2,
-          titulo: "Comigo-ninguém-pode",
-          subtitulo: "Dieffenbachia seguine",
-          texto: "Planta protetora utilizada em rituais",
+          titulo: "Arruda",
+          subtitulo: "Ruta graveolens",
+          texto: "Limpeza energética e afastamento de energias negativas.",
           imagem: "/placeholder.svg"
         },
         {
           id: 3,
-          titulo: "Espada de São Jorge",
-          subtitulo: "Sansevieria trifasciata",
-          texto: "Planta de proteção e limpeza energética",
+          titulo: "Guiné",
+          subtitulo: "Petiveria alliacea",
+          texto: "Proteção espiritual e limpeza.",
           imagem: "/placeholder.svg"
         },
         {
           id: 4,
-          titulo: "Guiné",
-          subtitulo: "Petiveria alliacea",
-          texto: "Erva sagrada de limpeza e proteção",
+          titulo: "Espada-de-São-Jorge",
+          subtitulo: "Sansevieria trifasciata",
+          texto: "Defesa contra negatividade.",
           imagem: "/placeholder.svg"
         },
         {
           id: 5,
-          titulo: "Alfazema",
-          subtitulo: "Lavandula angustifolia",
-          texto: "Planta aromática usada em rituais de paz",
+          titulo: "Manjericão",
+          subtitulo: "Ocimum basilicum",
+          texto: "Atrai prosperidade e harmonia.",
           imagem: "/placeholder.svg"
         },
         {
           id: 6,
-          titulo: "Alecrim",
-          subtitulo: "Rosmarinus officinalis",
-          texto: "Erva de proteção e purificação",
+          titulo: "Alfazema",
+          subtitulo: "Lavandula angustifolia",
+          texto: "Calmante e equilibradora.",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 7,
+          titulo: "Hortelã",
+          subtitulo: "Mentha spicata",
+          texto: "Revitalização e clareza mental.",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 8,
+          titulo: "Boldo",
+          subtitulo: "Plectranthus barbatus",
+          texto: "Purificação e limpeza interna.",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 9,
+          titulo: "Eucalipto",
+          subtitulo: "Eucalyptus globulus",
+          texto: "Proteção e limpeza energética.",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 10,
+          titulo: "Poejo",
+          subtitulo: "Mentha pulegium",
+          texto: "Afastamento de energias negativas.",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 11,
+          titulo: "Sálvia",
+          subtitulo: "Salvia officinalis",
+          texto: "Purificação e sabedoria.",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 12,
+          titulo: "Camomila",
+          subtitulo: "Matricaria chamomilla",
+          texto: "Calmante e harmonizadora.",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 13,
+          titulo: "Capim-cidreira",
+          subtitulo: "Cymbopogon citratus",
+          texto: "Relaxamento e tranquilidade.",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 14,
+          titulo: "Erva-doce",
+          subtitulo: "Pimpinella anisum",
+          texto: "Harmonia e proteção.",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 15,
+          titulo: "Jasmim",
+          subtitulo: "Jasminum officinale",
+          texto: "Atrai amor e paz.",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 16,
+          titulo: "Comigo-ninguém-pode",
+          subtitulo: "Dieffenbachia seguine",
+          texto: "Proteção poderosa.",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 17,
+          titulo: "Folha-da-fortuna",
+          subtitulo: "Kalanchoe pinnata",
+          texto: "Prosperidade e proteção.",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 18,
+          titulo: "Pinhão-roxo",
+          subtitulo: "Jatropha gossypiifolia",
+          texto: "Proteção e afastamento de energias ruins.",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 19,
+          titulo: "Samambaia",
+          subtitulo: "Nephrolepis exaltata",
+          texto: "Purificação e proteção.",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 20,
+          titulo: "Rosa-branca",
+          subtitulo: "Rosa alba",
+          texto: "Paz e amor incondicional.",
           imagem: "/placeholder.svg"
         }
       ];
