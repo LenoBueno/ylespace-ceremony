@@ -179,7 +179,7 @@ const Ervas = () => {
                 <CardHeader className="p-4">
                   <CardTitle className="text-lg">{erva.titulo}</CardTitle>
                 </CardHeader>
-                <div className="relative h-48 w-full">
+                <div className="relative h-32 w-full">
                   <img
                     src={erva.imagem}
                     alt={erva.titulo}
