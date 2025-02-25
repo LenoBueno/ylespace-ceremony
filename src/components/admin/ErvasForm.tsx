@@ -28,6 +28,7 @@ const ErvasForm = ({ novaErva, onErvaChange, onSubmit }: ErvaFormProps) => {
             onErvaChange({ ...novaErva, titulo: e.target.value })
           }
           maxLength={100}
+          required
         />
       </div>
       <div>
@@ -39,6 +40,7 @@ const ErvasForm = ({ novaErva, onErvaChange, onSubmit }: ErvaFormProps) => {
             onErvaChange({ ...novaErva, subtitulo: e.target.value })
           }
           maxLength={200}
+          required
         />
       </div>
       <div>
@@ -51,6 +53,7 @@ const ErvasForm = ({ novaErva, onErvaChange, onSubmit }: ErvaFormProps) => {
           }
           maxLength={2000}
           className="min-h-[200px]"
+          required
         />
         <p className="mt-1 text-sm text-gray-500">
           {novaErva.texto.length}/2000 caracteres
@@ -66,6 +69,7 @@ const ErvasForm = ({ novaErva, onErvaChange, onSubmit }: ErvaFormProps) => {
             e.target.files &&
             onErvaChange({ ...novaErva, imagem: e.target.files[0] })
           }
+          required={!novaErva.imagem}
         />
       </div>
       <Button type="submit" className="w-full">
