@@ -17,10 +17,51 @@ const Ervas = () => {
   
   // Simula o carregamento de dados locais
   useEffect(() => {
-    // Esta função será substituída pela integração real com o Supabase futuramente
     const carregarErvasLocais = () => {
-      // Podemos adicionar dados de exemplo aqui se necessário
-      const ervasLocais: Erva[] = [];
+      const ervasLocais: Erva[] = [
+        {
+          id: 1,
+          titulo: "Arruda",
+          subtitulo: "Ruta graveolens",
+          texto: "Erva sagrada associada à proteção espiritual",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 2,
+          titulo: "Comigo-ninguém-pode",
+          subtitulo: "Dieffenbachia seguine",
+          texto: "Planta protetora utilizada em rituais",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 3,
+          titulo: "Espada de São Jorge",
+          subtitulo: "Sansevieria trifasciata",
+          texto: "Planta de proteção e limpeza energética",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 4,
+          titulo: "Guiné",
+          subtitulo: "Petiveria alliacea",
+          texto: "Erva sagrada de limpeza e proteção",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 5,
+          titulo: "Alfazema",
+          subtitulo: "Lavandula angustifolia",
+          texto: "Planta aromática usada em rituais de paz",
+          imagem: "/placeholder.svg"
+        },
+        {
+          id: 6,
+          titulo: "Alecrim",
+          subtitulo: "Rosmarinus officinalis",
+          texto: "Erva de proteção e purificação",
+          imagem: "/placeholder.svg"
+        }
+      ];
       setErvas(ervasLocais);
     };
     
