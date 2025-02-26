@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 
 const Login = () => {
-  const { login } = useAuth();
+  const { login, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [credentials, setCredentials] = useState({
@@ -17,18 +17,11 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!credentials.email || !credentials.password) {
-      toast({
-        title: "Campos obrigatórios",
-        description: "Por favor, preencha todos os campos.",
-        variant: "destructive",
-      });
-      return;
-    }
-
+    
     setLoading(true);
     try {
-      await login(credentials.email, credentials.password);
+      // Chama login sem passar os parâmetros
+      await login();
       toast({
         title: "Login realizado com sucesso",
         description: "Você será redirecionado em instantes...",
@@ -37,9 +30,7 @@ const Login = () => {
       console.error("Login error:", error);
       toast({
         title: "Erro ao fazer login",
-        description: error.message === "Invalid login credentials"
-          ? "Email ou senha incorretos"
-          : "Ocorreu um erro ao fazer login. Por favor, tente novamente.",
+        description: "Ocorreu um erro ao fazer login. Por favor, tente novamente.",
         variant: "destructive",
       });
     } finally {
@@ -66,7 +57,6 @@ const Login = () => {
                   setCredentials({ ...credentials, email: e.target.value })
                 }
                 disabled={loading}
-                required
               />
             </div>
             <div className="space-y-2">
@@ -78,10 +68,9 @@ const Login = () => {
                   setCredentials({ ...credentials, password: e.target.value })
                 }
                 disabled={loading}
-                required
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full" disabled={loading || authLoading}>
               {loading ? "Entrando..." : "Entrar"}
             </Button>
           </form>
