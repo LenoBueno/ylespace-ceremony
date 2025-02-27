@@ -1,4 +1,3 @@
-
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "@/pages/Login";
 import Home from "@/pages/Home";
@@ -13,6 +12,7 @@ import { AdminRoute } from "@/components/auth/AdminRoute";
 import { PrivateRoute } from "@/components/auth/PrivateRoute";
 import { useAuth } from "@/hooks/useAuth";
 import "./App.css";
+import TestForm from './components/TestForm';
 
 function App() {
   const { user } = useAuth();

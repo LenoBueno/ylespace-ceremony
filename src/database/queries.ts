@@ -95,6 +95,11 @@ const queries = {
     return result;
   },
 
+  async getAllErvas() {
+    const [rows] = await pool.execute('SELECT * FROM ervas WHERE status = "ativo"');
+    return rows;
+  },
+
   async getErvasByCategoria(categoriaId: number) {
     const [rows] = await pool.execute(
       'SELECT * FROM ervas WHERE categoria_id = ? AND status = "ativo"',
@@ -150,4 +155,4 @@ const queries = {
   }
 };
 
-export default queries; 
+export default queries;

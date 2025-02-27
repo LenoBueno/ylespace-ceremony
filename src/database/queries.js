@@ -15,20 +15,25 @@ const queries = {
     return rows;
   },
 
+  // Ervas
+  async getAllErvas() {
+    const [rows] = await pool.execute('SELECT * FROM ervas');
+    return rows;
+  },
+
+  async createErva(erva) {
+    const [result] = await pool.execute(
+      'INSERT INTO ervas (titulo, subtitulo, texto, imagem) VALUES (?, ?, ?, ?)',
+      [erva.titulo, erva.subtitulo, erva.texto, erva.imagem]
+    );
+    return result;
+  },
+
   // Frentes
   async createFrente(frente) {
     const [result] = await pool.execute(
       'INSERT INTO frentes (titulo, descricao, imagem) VALUES (?, ?, ?)',
       [frente.titulo, frente.descricao, frente.imagem]
-    );
-    return result;
-  },
-
-  // Ervas
-  async createErva(erva) {
-    const [result] = await pool.execute(
-      'INSERT INTO ervas (titulo, subtitulo, texto, imagem) VALUES (?, ?, ?, ?)',
-      [erva.titulo, erva.subtitulo, erva.texto, erva.imagem]
     );
     return result;
   },
@@ -61,7 +66,9 @@ const queries = {
     } finally {
       connection.release();
     }
-  }
+  },
+
+  // Adicione outras funções conforme necessário
 };
 
 module.exports = queries; 
