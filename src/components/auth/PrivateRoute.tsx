@@ -1,18 +1,22 @@
 
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
 export const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
-  const location = useLocation();
+
+  console.log("PrivateRoute - user:", user);
+  console.log("PrivateRoute - loading:", loading);
 
   if (loading) {
     return <div>Carregando...</div>;
   }
 
   if (!user) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    console.log("Usuário não autenticado, redirecionando para login");
+    return <Navigate to="/login" replace />;
   }
 
+  console.log("Usuário autenticado, renderizando conteúdo protegido");
   return <>{children}</>;
 };
