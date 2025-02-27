@@ -4,8 +4,8 @@ const queries = {
   // Perfis
   async createPerfil(perfil) {
     const [result] = await pool.execute(
-      'INSERT INTO perfis (nome, orixa, nascimento, batizado, imagem) VALUES (?, ?, ?, ?, ?)',
-      [perfil.nome, perfil.orixa, perfil.nascimento, perfil.batizado, perfil.imagem]
+      'INSERT INTO perfis (nome, orixa, nascimento, batizado, imagem, status) VALUES (?, ?, ?, ?, ?, ?)',
+      [perfil.nome, perfil.orixa, perfil.nascimento, perfil.batizado, perfil.imagem, perfil.status || 'ativo']
     );
     return result;
   },
