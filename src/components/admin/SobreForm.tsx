@@ -16,9 +16,9 @@ interface SobreFormProps {
 
 const SobreForm = ({ sobre, onSobreChange, onSubmit }: SobreFormProps) => {
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
+    <form onSubmit={onSubmit} className="space-y-4 text-left">
       <div>
-        <Label htmlFor="sobreTexto">Texto</Label>
+        <Label htmlFor="sobreTexto" className="text-left">Texto</Label>
         <Textarea
           id="sobreTexto"
           value={sobre.texto}
@@ -27,7 +27,7 @@ const SobreForm = ({ sobre, onSobreChange, onSubmit }: SobreFormProps) => {
         />
       </div>
       <div>
-        <Label htmlFor="sobreImagem">Imagem (Assinatura)</Label>
+        <Label htmlFor="sobreImagem" className="text-left">Imagem (Assinatura)</Label>
         <Input
           id="sobreImagem"
           type="file"

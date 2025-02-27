@@ -18,9 +18,9 @@ interface ErvaFormProps {
 
 const ErvasForm = ({ novaErva, onErvaChange, onSubmit }: ErvaFormProps) => {
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
+    <form onSubmit={onSubmit} className="space-y-4 text-left">
       <div>
-        <Label htmlFor="titulo">Título</Label>
+        <Label htmlFor="titulo" className="text-left">Título</Label>
         <Input
           id="titulo"
           value={novaErva.titulo}
@@ -32,7 +32,7 @@ const ErvasForm = ({ novaErva, onErvaChange, onSubmit }: ErvaFormProps) => {
         />
       </div>
       <div>
-        <Label htmlFor="subtitulo">Subtítulo</Label>
+        <Label htmlFor="subtitulo" className="text-left">Subtítulo</Label>
         <Input
           id="subtitulo"
           value={novaErva.subtitulo}
@@ -44,7 +44,7 @@ const ErvasForm = ({ novaErva, onErvaChange, onSubmit }: ErvaFormProps) => {
         />
       </div>
       <div>
-        <Label htmlFor="texto">Texto</Label>
+        <Label htmlFor="texto" className="text-left">Texto</Label>
         <Textarea
           id="texto"
           value={novaErva.texto}
@@ -55,12 +55,12 @@ const ErvasForm = ({ novaErva, onErvaChange, onSubmit }: ErvaFormProps) => {
           className="min-h-[200px]"
           required
         />
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-gray-500 text-left">
           {novaErva.texto.length}/2000 caracteres
         </p>
       </div>
       <div>
-        <Label htmlFor="imagem">Imagem</Label>
+        <Label htmlFor="imagem" className="text-left">Imagem</Label>
         <Input
           id="imagem"
           type="file"

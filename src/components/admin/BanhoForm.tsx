@@ -41,9 +41,9 @@ const BanhoForm = ({ novoBanho, ervasDisponiveis, onBanhoChange, onSubmit }: Ban
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
+    <form onSubmit={onSubmit} className="space-y-4 text-left">
       <div>
-        <Label htmlFor="titulo">Título</Label>
+        <Label htmlFor="titulo" className="text-left">Título</Label>
         <Input
           id="titulo"
           value={novoBanho.titulo}
@@ -55,7 +55,7 @@ const BanhoForm = ({ novoBanho, ervasDisponiveis, onBanhoChange, onSubmit }: Ban
         />
       </div>
       <div>
-        <Label htmlFor="subtitulo">Subtítulo</Label>
+        <Label htmlFor="subtitulo" className="text-left">Subtítulo</Label>
         <Input
           id="subtitulo"
           value={novoBanho.subtitulo}
@@ -67,16 +67,16 @@ const BanhoForm = ({ novoBanho, ervasDisponiveis, onBanhoChange, onSubmit }: Ban
         />
       </div>
       <div>
-        <Label>Ervas</Label>
+        <Label className="text-left">Ervas</Label>
         <div className="mt-2 grid grid-cols-2 gap-2 max-h-60 overflow-y-auto border rounded-md p-3">
           {ervasDisponiveis.map((erva) => (
-            <div key={erva.id} className="flex items-center space-x-2">
+            <div key={erva.id} className="flex items-center space-x-2 text-left">
               <Checkbox 
                 id={`erva-${erva.id}`}
                 checked={novoBanho.ervasSelecionadas.includes(erva.id)}
                 onCheckedChange={() => handleErvaToggle(erva.id)}
               />
-              <Label htmlFor={`erva-${erva.id}`} className="text-sm cursor-pointer">
+              <Label htmlFor={`erva-${erva.id}`} className="text-sm cursor-pointer text-left">
                 {erva.titulo}
               </Label>
             </div>
@@ -84,7 +84,7 @@ const BanhoForm = ({ novoBanho, ervasDisponiveis, onBanhoChange, onSubmit }: Ban
         </div>
       </div>
       <div>
-        <Label htmlFor="imagem">Imagem</Label>
+        <Label htmlFor="imagem" className="text-left">Imagem</Label>
         <Input
           id="imagem"
           type="file"

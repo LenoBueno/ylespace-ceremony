@@ -9,7 +9,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
-      <main className="container mx-auto flex-1 px-4 py-8">
+      <main className="container mx-auto flex-1 px-4 py-8 text-left">
         <div className="transition-opacity duration-200 ease-in-out">
           {children}
         </div>

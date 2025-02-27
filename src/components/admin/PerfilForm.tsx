@@ -24,9 +24,9 @@ interface PerfilFormProps {
 
 const PerfilForm = ({ novoPerfil, onPerfilChange, onSubmit }: PerfilFormProps) => {
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
+    <form onSubmit={onSubmit} className="space-y-4 text-left">
       <div>
-        <Label htmlFor="nome">Nome</Label>
+        <Label htmlFor="nome" className="text-left">Nome</Label>
         <Input
           id="nome"
           value={novoPerfil.nome}
@@ -38,7 +38,7 @@ const PerfilForm = ({ novoPerfil, onPerfilChange, onSubmit }: PerfilFormProps) =
         />
       </div>
       <div>
-        <Label htmlFor="orixa">Orixá</Label>
+        <Label htmlFor="orixa" className="text-left">Orixá</Label>
         <Input
           id="orixa"
           value={novoPerfil.orixa}
@@ -50,7 +50,7 @@ const PerfilForm = ({ novoPerfil, onPerfilChange, onSubmit }: PerfilFormProps) =
         />
       </div>
       <div>
-        <Label htmlFor="nascimento">Data de Nascimento</Label>
+        <Label htmlFor="nascimento" className="text-left">Data de Nascimento</Label>
         <Input
           id="nascimento"
           type="date"
@@ -62,7 +62,7 @@ const PerfilForm = ({ novoPerfil, onPerfilChange, onSubmit }: PerfilFormProps) =
         />
       </div>
       <div>
-        <Label htmlFor="batizado">Data de Batizado</Label>
+        <Label htmlFor="batizado" className="text-left">Data de Batizado</Label>
         <Input
           id="batizado"
           type="date"
@@ -74,7 +74,7 @@ const PerfilForm = ({ novoPerfil, onPerfilChange, onSubmit }: PerfilFormProps) =
         />
       </div>
       <div>
-        <Label htmlFor="imagem">Imagem</Label>
+        <Label htmlFor="imagem" className="text-left">Imagem</Label>
         <Input
           id="imagem"
           type="file"

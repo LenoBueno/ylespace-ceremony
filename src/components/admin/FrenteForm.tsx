@@ -23,9 +23,9 @@ const FrenteForm = ({ novaFrente, onFrenteChange, onSubmit }: FrenteFormProps) =
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
+    <form onSubmit={onSubmit} className="space-y-4 text-left">
       <div>
-        <Label htmlFor="titulo">Título</Label>
+        <Label htmlFor="titulo" className="text-left">Título</Label>
         <Input
           id="titulo"
           value={novaFrente.titulo}
@@ -36,7 +36,7 @@ const FrenteForm = ({ novaFrente, onFrenteChange, onSubmit }: FrenteFormProps) =
         />
       </div>
       <div>
-        <Label htmlFor="descricao">Descrição</Label>
+        <Label htmlFor="descricao" className="text-left">Descrição</Label>
         <Textarea
           id="descricao"
           value={novaFrente.descricao}
@@ -46,12 +46,12 @@ const FrenteForm = ({ novaFrente, onFrenteChange, onSubmit }: FrenteFormProps) =
           maxLength={200}
           className="h-20"
         />
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-gray-500 text-left">
           {novaFrente.descricao.length}/200 caracteres
         </p>
       </div>
       <div>
-        <Label htmlFor="imagem">Imagem</Label>
+        <Label htmlFor="imagem" className="text-left">Imagem</Label>
         <Input
           id="imagem"
           type="file"

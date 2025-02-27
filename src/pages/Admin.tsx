@@ -185,9 +185,9 @@ const Admin = () => {
 
   return (
     <Layout>
-      <Card>
-        <CardHeader>
-          <CardTitle>Painel Administrativo</CardTitle>
+      <Card className="text-left">
+        <CardHeader className="text-left">
+          <CardTitle className="text-left">Painel Administrativo</CardTitle>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="perfis" className="w-full">
@@ -200,9 +200,9 @@ const Admin = () => {
             </TabsList>
             
             <TabsContent value="perfis">
-              <div className="mt-4 space-y-6">
+              <div className="mt-4 space-y-6 text-left">
                 <div className="rounded-lg border p-4">
-                  <h3 className="mb-4 text-lg font-semibold">Adicionar Novo Perfil</h3>
+                  <h3 className="mb-4 text-lg font-semibold text-left">Adicionar Novo Perfil</h3>
                   <PerfilForm
                     novoPerfil={novoPerfil}
                     onPerfilChange={setNovoPerfil}
@@ -214,9 +214,9 @@ const Admin = () => {
             </TabsContent>
             
             <TabsContent value="ervas">
-              <div className="mt-4 space-y-6">
+              <div className="mt-4 space-y-6 text-left">
                 <div className="rounded-lg border p-4">
-                  <h3 className="mb-4 text-lg font-semibold">Adicionar Nova Erva</h3>
+                  <h3 className="mb-4 text-lg font-semibold text-left">Adicionar Nova Erva</h3>
                   <ErvasForm
                     novaErva={novaErva}
                     onErvaChange={setNovaErva}
@@ -227,9 +227,9 @@ const Admin = () => {
             </TabsContent>
 
             <TabsContent value="frentes">
-              <div className="mt-4 space-y-6">
+              <div className="mt-4 space-y-6 text-left">
                 <div className="rounded-lg border p-4">
-                  <h3 className="mb-4 text-lg font-semibold">Adicionar Nova Frente</h3>
+                  <h3 className="mb-4 text-lg font-semibold text-left">Adicionar Nova Frente</h3>
                   <FrenteForm
                     novaFrente={novaFrente}
                     onFrenteChange={setNovaFrente}
@@ -241,7 +241,7 @@ const Admin = () => {
             </TabsContent>
 
             <TabsContent value="sobre">
-              <div className="mt-4 space-y-6">
+              <div className="mt-4 space-y-6 text-left">
                 <SobreForm
                   sobre={sobre}
                   onSobreChange={setSobre}
@@ -251,9 +251,9 @@ const Admin = () => {
             </TabsContent>
 
             <TabsContent value="banhos">
-              <div className="mt-4 space-y-6">
+              <div className="mt-4 space-y-6 text-left">
                 <div className="rounded-lg border p-4">
-                  <h3 className="mb-4 text-lg font-semibold">Adicionar Novo Banho de Descarga</h3>
+                  <h3 className="mb-4 text-lg font-semibold text-left">Adicionar Novo Banho de Descarga</h3>
                   <BanhoForm
                     novoBanho={novoBanho}
                     ervasDisponiveis={ervas}
