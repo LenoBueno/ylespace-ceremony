@@ -1,12 +1,15 @@
-
 import { useEffect, useState } from "react";
 import Layout from "@/components/layout/Layout";
 import ProfileCard from "@/components/ProfileCard";
-import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import type { Database } from "@/integrations/supabase/types";
 
-type Profile = Database["public"]["Tables"]["profiles"]["Row"];
+type Profile = {
+  id: string;
+  nome: string;
+  orixa: string;
+  nascimento: string;
+  batizado: string;
+};
 
 const Home = () => {
   const { user } = useAuth();
@@ -20,13 +23,11 @@ const Home = () => {
 
   const fetchProfile = async () => {
     try {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", user?.id)
-        .single();
-
-      if (error) throw error;
+      console.log(`Buscando perfil para o usuário com ID: ${user?.id}`);
+      const response = await fetch(`http://localhost:3000/api/perfis?id=${user?.id}`);
+      if (!response.ok) throw new Error('Erro ao buscar perfil');
+      const data = await response.json();
+      console.log('Perfil recuperado:', data);
       setProfile(data);
     } catch (error) {
       console.error("Error fetching profile:", error);

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Input } from "@/components/ui/input";
@@ -8,13 +7,17 @@ import { Label } from "@/components/ui/label";
 
 const Profile = () => {
   const [profile, setProfile] = useState({
-    name: "",
+    id: "",
+    full_name: "",
     orixa: "",
     birthday: "",
     baptismDate: "",
     fronts: "",
     umbandaObligations: "",
     santoObligations: "",
+    created_at: "",
+    updated_at: "",
+    role: "user",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -36,12 +39,12 @@ const Profile = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="name">Nome Completo</Label>
+              <Label htmlFor="full_name">Nome Completo</Label>
               <Input
-                id="name"
-                value={profile.name}
+                id="full_name"
+                value={profile.full_name}
                 onChange={(e) =>
-                  setProfile({ ...profile, name: e.target.value })
+                  setProfile({ ...profile, full_name: e.target.value })
                 }
               />
             </div>

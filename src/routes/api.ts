@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/perfis', async (req, res) => {
   try {
     const perfis = await queries.getAllPerfis();
+    console.log('Perfis recuperados:', perfis);
     res.json(perfis);
   } catch (error) {
     res.status(500).json({ error: 'Erro ao buscar perfis' });
@@ -17,6 +18,7 @@ router.get('/perfis', async (req, res) => {
 router.post('/perfis', async (req, res) => {
   try {
     const novoPerfil = await queries.createPerfil(req.body);
+    console.log('Perfil criado:', novoPerfil);
     res.status(201).json(novoPerfil);
   } catch (error) {
     res.status(500).json({ error: 'Erro ao criar perfil' });
