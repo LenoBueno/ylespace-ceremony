@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -7,18 +7,16 @@ import FrenteForm from "@/components/admin/FrenteForm";
 import FrentesList from "@/components/admin/FrentesList";
 import SobreForm from "@/components/admin/SobreForm";
 import ErvasForm from "@/components/admin/ErvasForm";
+import PerfilForm from "@/components/admin/PerfilForm";
+import PerfisList from "@/components/admin/PerfisList";
+import BanhoForm from "@/components/admin/BanhoForm";
+import BanhosList from "@/components/admin/BanhosList";
 
 const Admin = () => {
+  // Estados para frentes
   const [novaFrente, setNovaFrente] = useState({
     titulo: "",
     descricao: "",
-    imagem: null as File | null,
-  });
-
-  const [novaErva, setNovaErva] = useState({
-    titulo: "",
-    subtitulo: "",
-    texto: "",
     imagem: null as File | null,
   });
   
@@ -29,6 +27,14 @@ const Admin = () => {
     imagem: string;
   }>>([]);
 
+  // Estados para ervas
+  const [novaErva, setNovaErva] = useState({
+    titulo: "",
+    subtitulo: "",
+    texto: "",
+    imagem: null as File | null,
+  });
+
   const [ervas, setErvas] = useState<Array<{
     id: number;
     titulo: string;
@@ -37,11 +43,71 @@ const Admin = () => {
     imagem: string;
   }>>([]);
 
+  // Estados para perfis
+  const [novoPerfil, setNovoPerfil] = useState({
+    nome: "",
+    orixa: "",
+    nascimento: "",
+    batizado: "",
+    imagem: null as File | null,
+  });
+
+  const [perfis, setPerfis] = useState<Array<{
+    id: number;
+    nome: string;
+    orixa: string;
+    nascimento: string;
+    batizado: string;
+    imagem: string;
+  }>>([]);
+
+  // Estados para banhos
+  const [novoBanho, setNovoBanho] = useState({
+    titulo: "",
+    subtitulo: "",
+    ervasSelecionadas: [] as number[],
+    imagem: null as File | null,
+  });
+
+  const [banhos, setBanhos] = useState<Array<{
+    id: number;
+    titulo: string;
+    subtitulo: string;
+    ervas: string[];
+    imagem: string;
+  }>>([]);
+
+  // Estado para a página sobre
   const [sobre, setSobre] = useState({
     texto: "",
     imagem: null as File | null,
   });
 
+  // Carrega ervas para o formulário de banhos
+  useEffect(() => {
+    // Simulação de ervas para exibir no checklist
+    const ervasLocais = [
+      { id: 1, titulo: "Alecrim" },
+      { id: 2, titulo: "Arruda" },
+      { id: 3, titulo: "Guiné" },
+      { id: 4, titulo: "Espada-de-São-Jorge" },
+      { id: 5, titulo: "Manjericão" },
+      { id: 6, titulo: "Alfazema" },
+      { id: 7, titulo: "Hortelã" },
+      { id: 8, titulo: "Boldo" },
+      { id: 9, titulo: "Eucalipto" },
+      { id: 10, titulo: "Poejo" },
+    ];
+    setErvas(ervasLocais.map(erva => ({
+      id: erva.id,
+      titulo: erva.titulo,
+      subtitulo: "",
+      texto: "",
+      imagem: "/placeholder.svg"
+    })));
+  }, []);
+
+  // Handlers para Frentes
   const handleSalvarFrente = (e: React.FormEvent) => {
     e.preventDefault();
     if (novaFrente.titulo && novaFrente.descricao && novaFrente.imagem) {
@@ -56,6 +122,7 @@ const Admin = () => {
     }
   };
 
+  // Handlers para Ervas
   const handleSalvarErva = (e: React.FormEvent) => {
     e.preventDefault();
     if (novaErva.titulo && novaErva.subtitulo && novaErva.texto && novaErva.imagem) {
@@ -71,6 +138,46 @@ const Admin = () => {
     }
   };
 
+  // Handlers para Perfis
+  const handleSalvarPerfil = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (novoPerfil.nome && novoPerfil.orixa && novoPerfil.nascimento && novoPerfil.batizado && novoPerfil.imagem) {
+      const novoPerfilObj = {
+        id: Date.now(),
+        nome: novoPerfil.nome,
+        orixa: novoPerfil.orixa,
+        nascimento: novoPerfil.nascimento,
+        batizado: novoPerfil.batizado,
+        imagem: URL.createObjectURL(novoPerfil.imagem),
+      };
+      setPerfis([...perfis, novoPerfilObj]);
+      setNovoPerfil({ nome: "", orixa: "", nascimento: "", batizado: "", imagem: null });
+    }
+  };
+
+  // Handlers para Banhos
+  const handleSalvarBanho = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (novoBanho.titulo && novoBanho.subtitulo && novoBanho.ervasSelecionadas.length > 0 && novoBanho.imagem) {
+      // Converter IDs de ervas selecionadas para nomes de ervas
+      const ervasSelecionadas = novoBanho.ervasSelecionadas.map(id => {
+        const erva = ervas.find(e => e.id === id);
+        return erva ? erva.titulo : "";
+      }).filter(titulo => titulo !== "");
+
+      const novoBanhoObj = {
+        id: Date.now(),
+        titulo: novoBanho.titulo,
+        subtitulo: novoBanho.subtitulo,
+        ervas: ervasSelecionadas,
+        imagem: URL.createObjectURL(novoBanho.imagem),
+      };
+      setBanhos([...banhos, novoBanhoObj]);
+      setNovoBanho({ titulo: "", subtitulo: "", ervasSelecionadas: [], imagem: null });
+    }
+  };
+
+  // Handler para Sobre
   const handleSobreSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Salvando sobre:", sobre);
@@ -83,14 +190,28 @@ const Admin = () => {
           <CardTitle>Painel Administrativo</CardTitle>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="frentes" className="w-full">
+          <Tabs defaultValue="perfis" className="w-full">
             <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="perfis">Perfis</TabsTrigger>
               <TabsTrigger value="frentes">Frentes</TabsTrigger>
               <TabsTrigger value="sobre">Sobre</TabsTrigger>
-              <TabsTrigger value="inicio">Início</TabsTrigger>
+              <TabsTrigger value="banhos">Banhos de Descarga</TabsTrigger>
               <TabsTrigger value="ervas">Ervas</TabsTrigger>
             </TabsList>
+            
+            <TabsContent value="perfis">
+              <div className="mt-4 space-y-6">
+                <div className="rounded-lg border p-4">
+                  <h3 className="mb-4 text-lg font-semibold">Adicionar Novo Perfil</h3>
+                  <PerfilForm
+                    novoPerfil={novoPerfil}
+                    onPerfilChange={setNovoPerfil}
+                    onSubmit={handleSalvarPerfil}
+                  />
+                </div>
+                <PerfisList perfis={perfis} />
+              </div>
+            </TabsContent>
             
             <TabsContent value="ervas">
               <div className="mt-4 space-y-6">
@@ -129,18 +250,18 @@ const Admin = () => {
               </div>
             </TabsContent>
 
-            <TabsContent value="inicio">
-              <div className="mt-4">
-                <h3 className="text-lg font-semibold">Editar Início</h3>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="perfis">
-              <div className="mt-4">
-                <h3 className="text-lg font-semibold">Gerenciar Perfis</h3>
-                <div className="mt-4 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                  {/* TODO: Implementar cards de perfis */}
+            <TabsContent value="banhos">
+              <div className="mt-4 space-y-6">
+                <div className="rounded-lg border p-4">
+                  <h3 className="mb-4 text-lg font-semibold">Adicionar Novo Banho de Descarga</h3>
+                  <BanhoForm
+                    novoBanho={novoBanho}
+                    ervasDisponiveis={ervas}
+                    onBanhoChange={setNovoBanho}
+                    onSubmit={handleSalvarBanho}
+                  />
                 </div>
+                <BanhosList banhos={banhos} />
               </div>
             </TabsContent>
           </Tabs>

@@ -50,6 +50,11 @@ const Header = () => {
                 Ervas
               </Link>
             </li>
+            <li>
+              <Link to="/banhos" className="animated-underline">
+                Banhos de Descarga
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>
