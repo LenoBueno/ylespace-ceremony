@@ -29,6 +29,7 @@ export const useAuth = () => {
   };
 
   const logout = () => {
+    console.log("Logging out..."); // Log para debug
     navigate("/login");
   };
 

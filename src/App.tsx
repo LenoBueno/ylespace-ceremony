@@ -17,6 +17,8 @@ import "./App.css";
 function App() {
   const { user } = useAuth();
 
+  console.log("Current user state:", user); // Adicionar log para debug
+
   return (
     <Routes>
       <Route
