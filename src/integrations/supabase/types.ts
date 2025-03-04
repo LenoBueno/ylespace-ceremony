@@ -9,7 +9,207 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      banhos: {
+        Row: {
+          created_at: string
+          id: number
+          imagem: string | null
+          subtitulo: string
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          imagem?: string | null
+          subtitulo: string
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          imagem?: string | null
+          subtitulo?: string
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      banhos_ervas: {
+        Row: {
+          banho_id: number
+          created_at: string
+          erva_id: number
+          updated_at: string
+        }
+        Insert: {
+          banho_id: number
+          created_at?: string
+          erva_id: number
+          updated_at?: string
+        }
+        Update: {
+          banho_id?: number
+          created_at?: string
+          erva_id?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "banhos_ervas_banho_id_fkey"
+            columns: ["banho_id"]
+            isOneToOne: false
+            referencedRelation: "banhos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "banhos_ervas_erva_id_fkey"
+            columns: ["erva_id"]
+            isOneToOne: false
+            referencedRelation: "ervas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ervas: {
+        Row: {
+          created_at: string
+          id: number
+          imagem: string | null
+          subtitulo: string
+          texto: string
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          imagem?: string | null
+          subtitulo: string
+          texto: string
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          imagem?: string | null
+          subtitulo?: string
+          texto?: string
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      frentes: {
+        Row: {
+          created_at: string
+          descricao: string
+          id: number
+          imagem: string | null
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          descricao: string
+          id?: number
+          imagem?: string | null
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          descricao?: string
+          id?: number
+          imagem?: string | null
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      perfis_filhos: {
+        Row: {
+          batizado: string
+          created_at: string
+          id: number
+          imagem: string | null
+          nascimento: string
+          nome: string
+          orixa: string
+          updated_at: string
+        }
+        Insert: {
+          batizado: string
+          created_at?: string
+          id?: number
+          imagem?: string | null
+          nascimento: string
+          nome: string
+          orixa: string
+          updated_at?: string
+        }
+        Update: {
+          batizado?: string
+          created_at?: string
+          id?: number
+          imagem?: string | null
+          nascimento?: string
+          nome?: string
+          orixa?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id: string
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      sobre: {
+        Row: {
+          created_at: string
+          id: number
+          imagem: string | null
+          texto: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          imagem?: string | null
+          texto: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          imagem?: string | null
+          texto?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +218,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      user_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
