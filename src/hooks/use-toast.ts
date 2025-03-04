@@ -1,5 +1,9 @@
 
-// Forward exports from the UI component to avoid circular dependencies
-import { useToast, toast, type ToastProps, type ToastActionElement } from "@/components/ui/use-toast"
+// This file re-exports toast functionality from the UI component
+import { useToast, toast } from "@/components/ui/use-toast";
 
-export { useToast, toast, type ToastProps, type ToastActionElement }
+// Export the hook and functions
+export { useToast, toast };
+
+// Re-export the types
+export type { ToastProps, ToastActionElement } from "@/components/ui/use-toast";
