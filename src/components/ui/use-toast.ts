@@ -1,15 +1,15 @@
 
-// Instead of importing from hooks, we'll export directly from this file
-// This breaks the circular dependency
 import * as React from "react"
 
-import type {
-  ToastActionElement,
-  ToastProps,
-} from "@/components/ui/toast"
+// Define types directly here instead of importing them
+type ToastProps = {
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  className?: string
+  variant?: "default" | "destructive"
+}
 
-const TOAST_LIMIT = 1
-const TOAST_REMOVE_DELAY = 1000000
+type ToastActionElement = React.ReactElement
 
 type ToasterToast = ToastProps & {
   id: string
@@ -17,6 +17,9 @@ type ToasterToast = ToastProps & {
   description?: React.ReactNode
   action?: ToastActionElement
 }
+
+const TOAST_LIMIT = 1
+const TOAST_REMOVE_DELAY = 1000000
 
 const actionTypes = {
   ADD_TOAST: "ADD_TOAST",
@@ -189,4 +192,6 @@ function useToast() {
   }
 }
 
+// Export also the types for other files to use
+export type { ToastProps, ToastActionElement }
 export { useToast, toast }
