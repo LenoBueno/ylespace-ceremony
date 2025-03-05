@@ -1,8 +1,7 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
+import { supabase } from "../../integrations/supabase/client";
+import { toast } from "../../hooks/use-toast";
 import { User, AuthState } from "./types";
 import { login as loginService, logout as logoutService, register as registerService } from "./authService";
 import { updateProfile, fetchUserProfile } from "./profileUtils";
