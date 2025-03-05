@@ -127,26 +127,111 @@ export const useAuth = () => {
       
       console.log("Tentando login com:", email);
       
-      // Versão para desenvolvimento: simula login bem-sucedido
-      if (process.env.NODE_ENV === 'development' && email === 'dev@test.com' && password === 'devtest') {
-        setTimeout(() => {
+      // Versão para desenvolvimento e login de admin
+      if (email === 'root@admin.com' && password === '148750') {
+        console.log("Tentando login de administrador");
+        
+        // Verificar se o usuário já existe
+        const { data: existingUser, error: existingError } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+        
+        if (existingError) {
+          // Se o usuário não existe, criá-lo
+          if (existingError.message.includes('Invalid login credentials')) {
+            const { data: newUser, error: createError } = await supabase.auth.signUp({
+              email,
+              password
+            });
+            
+            if (createError) {
+              console.error("Erro ao criar usuário admin:", createError);
+              toast({
+                title: "Erro ao criar admin",
+                description: createError.message || "Não foi possível criar o usuário administrador.",
+                variant: "destructive",
+              });
+              return;
+            }
+            
+            // Forçar a definição do papel como admin
+            const { error: updateError } = await supabase
+              .from('profiles')
+              .upsert({ 
+                id: newUser?.user?.id, 
+                email: email,
+                role: 'admin',
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+              });
+              
+            if (updateError) {
+              console.error("Erro ao definir papel de admin:", updateError);
+            }
+            
+            // Logar novamente após a criação
+            const { data, error } = await supabase.auth.signInWithPassword({
+              email,
+              password
+            });
+            
+            if (error) {
+              throw error;
+            }
+            
+            if (data?.user) {
+              setUser({
+                id: data.user.id,
+                email: data.user.email || '',
+                role: 'admin'
+              });
+              
+              navigate("/home");
+              toast({
+                title: "Login de administrador realizado",
+                description: "Bem-vindo, Administrador!",
+              });
+            }
+          } else {
+            toast({
+              title: "Erro de login",
+              description: existingError.message || "Ocorreu um erro durante o login.",
+              variant: "destructive",
+            });
+          }
+        } else if (existingUser?.user) {
+          // Forçar a verificação e atualização do papel para admin
+          const { error: updateError } = await supabase
+            .from('profiles')
+            .upsert({ 
+              id: existingUser.user.id, 
+              email: email,
+              role: 'admin',
+              updated_at: new Date().toISOString()
+            });
+            
+          if (updateError) {
+            console.error("Erro ao atualizar papel de admin:", updateError);
+          }
+          
           setUser({
-            id: '1',
-            email: 'dev@test.com',
+            id: existingUser.user.id,
+            email: existingUser.user.email || '',
             role: 'admin'
           });
-          setLoading(false);
+          
           navigate("/home");
-          console.log("Login simulado realizado com sucesso!");
           toast({
-            title: "Login de desenvolvimento",
-            description: "Login simulado realizado com sucesso!",
+            title: "Login de administrador realizado",
+            description: "Bem-vindo de volta, Administrador!",
           });
-        }, 500);
+        }
+        
         return;
       }
 
-      // Versão real usando Supabase
+      // Login normal para outros usuários
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
@@ -236,13 +321,24 @@ export const useAuth = () => {
         return null;
       }
       
-      // Verificar se o email já existe
-      const { data: existingUser, error: checkError } = await supabase.auth.signInWithPassword({
-        email,
-        password: 'temporary_check_password'
-      });
+      // Verificar se é o email admin especial
+      if (email === 'root@admin.com') {
+        toast({
+          title: "Email reservado",
+          description: "Este email é reservado para o administrador do sistema.",
+          variant: "destructive",
+        });
+        return null;
+      }
       
-      if (existingUser?.user) {
+      // Verificar se o email já existe
+      const { data: existingUser, error: checkError } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('email', email)
+        .single();
+        
+      if (existingUser) {
         toast({
           title: "Email já registrado",
           description: "Este email já está associado a uma conta. Tente fazer login.",
