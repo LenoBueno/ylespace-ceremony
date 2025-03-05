@@ -1,7 +1,8 @@
+
 import { useEffect, useState } from "react";
 import Layout from "@/components/layout/Layout";
 import ProfileCard from "@/components/ProfileCard";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/auth";
 
 type Profile = {
   id: string;
