@@ -1,3 +1,4 @@
+
 import { supabase } from "../../integrations/supabase/client";
 import { toast } from "../../hooks/use-toast";
 import { updateProfile } from "./profileUtils";
@@ -5,13 +6,37 @@ import { User } from "./types";
 
 export const login = async (email: string, password: string): Promise<User | null> => {
   try {
+    console.log("Tentando login com:", email);
+    
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
 
     if (error) {
-      console.error("Erro ao fazer login:", error);
+      console.error("Erro de autenticação:", error);
+      
+      // Handle specific error cases
+      if (error.message === "Email not confirmed") {
+        // Send a new confirmation email
+        const { error: resendError } = await supabase.auth.resend({
+          type: 'signup',
+          email: email,
+        });
+        
+        if (resendError) {
+          console.error("Erro ao reenviar email de confirmação:", resendError);
+        }
+        
+        toast({
+          title: "Email não confirmado",
+          description: "Um novo email de confirmação foi enviado. Por favor, verifique sua caixa de entrada.",
+          variant: "destructive",
+        });
+        
+        return null;
+      }
+      
       toast({
         title: "Erro ao fazer login",
         description: error.message,
@@ -39,7 +64,7 @@ export const login = async (email: string, password: string): Promise<User | nul
       role: 'user', // Default role, will be updated by the auth listener
     };
   } catch (error: any) {
-    console.error("Erro ao fazer login:", error.message);
+    console.error("Erro de login:", error);
     toast({
       title: "Erro ao fazer login",
       description: error.message,
@@ -51,9 +76,19 @@ export const login = async (email: string, password: string): Promise<User | nul
 
 export const register = async (email: string, password: string): Promise<boolean> => {
   try {
+    // For admin account (root@admin.com), set redirect to false to bypass email confirmation
+    const isAdmin = email === 'root@admin.com';
+    
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
+      options: {
+        emailRedirectTo: window.location.origin + '/login',
+        // If admin account, we'll handle it differently
+        data: {
+          is_admin: isAdmin
+        }
+      }
     });
 
     if (error) {
@@ -77,15 +112,25 @@ export const register = async (email: string, password: string): Promise<boolean
     }
 
     // Update user profile on registration
-    await updateProfile(data.user.id, data.user.email || '');
+    const role = isAdmin ? 'admin' : 'user';
+    await updateProfile(data.user.id, data.user.email || '', role);
 
-    toast({
-      title: "Registro realizado com sucesso",
-      description: "Verifique seu email para confirmar o registro.",
-    });
+    if (isAdmin) {
+      // For admin users, show special message
+      toast({
+        title: "Administrador registrado",
+        description: "Conta de administrador criada com sucesso.",
+      });
+    } else {
+      toast({
+        title: "Registro realizado com sucesso",
+        description: "Verifique seu email para confirmar o registro.",
+      });
+    }
+    
     return true;
   } catch (error: any) {
-    console.error("Erro ao registrar:", error.message);
+    console.error("Erro ao registrar:", error);
     toast({
       title: "Erro ao registrar",
       description: error.message,

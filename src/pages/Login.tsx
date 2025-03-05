@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useAuth } from "@/hooks/auth";
 import { Input } from "@/components/ui/input";
@@ -6,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Eye, EyeOff, AlertCircle } from "lucide-react";
+import { Eye, EyeOff, AlertCircle, Info } from "lucide-react";
 
 const Login = () => {
   const { login, register, loading: authLoading } = useAuth();
@@ -118,7 +117,6 @@ const Login = () => {
     }
   };
 
-  // Helper para mostrar o feedback de erro
   const ErrorMessage = ({ message }: { message: string }) => {
     if (!message) return null;
     return (
@@ -196,6 +194,14 @@ const Login = () => {
                     <ErrorMessage message={validationErrors.loginPassword} />
                   </div>
                 </div>
+                
+                <div className="p-3 bg-blue-50 rounded-md text-sm">
+                  <div className="flex items-start">
+                    <Info className="h-5 w-5 mr-2 text-blue-500 flex-shrink-0 mt-0.5" />
+                    <p>Lembre-se de verificar seu email após o registro para ativar sua conta. Se não recebeu, tente fazer login novamente para reenviar.</p>
+                  </div>
+                </div>
+                
                 <Button type="submit" className="w-full" disabled={loading || authLoading}>
                   {loading ? "Entrando..." : "Entrar"}
                 </Button>

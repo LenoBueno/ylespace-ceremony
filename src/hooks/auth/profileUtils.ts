@@ -1,9 +1,13 @@
+
 import { supabase } from "../../integrations/supabase/client";
+import type { Database } from "../../integrations/supabase/types";
+
+type UserRole = Database["public"]["Enums"]["user_role"];
 
 /**
  * Updates or creates a user profile in the database
  */
-export const updateProfile = async (userId: string, email: string, role: string = 'user') => {
+export const updateProfile = async (userId: string, email: string, role: UserRole = 'user') => {
   try {
     // Check if profile exists
     const { data: existingProfile, error: checkError } = await supabase
