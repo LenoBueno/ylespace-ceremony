@@ -15,6 +15,43 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const updateProfile = async (userId: string, email: string, role: string = 'user') => {
+    try {
+      // Check if profile exists
+      const { data: existingProfile, error: checkError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
+
+      if (checkError && !checkError.message.includes('No rows found')) {
+        console.error("Erro ao verificar perfil:", checkError);
+        return false;
+      }
+
+      // If profile exists, update it. Otherwise, create it.
+      const { error: upsertError } = await supabase
+        .from('profiles')
+        .upsert({ 
+          id: userId, 
+          email: email,
+          role: role,
+          updated_at: new Date().toISOString(),
+          created_at: existingProfile ? existingProfile.created_at : new Date().toISOString()
+        });
+
+      if (upsertError) {
+        console.error("Erro ao atualizar perfil:", upsertError);
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Erro ao atualizar perfil:", error);
+      return false;
+    }
+  };
+
   useEffect(() => {
     // Verificar sessão atual do usuário
     const checkSession = async () => {
@@ -34,6 +71,22 @@ export const useAuth = () => {
             
           if (profileError) {
             console.error("Erro ao buscar perfil:", profileError);
+            
+            // Se o perfil não for encontrado, talvez o trigger não funcionou - tentar criar o perfil
+            if (profileError.message.includes('No rows found')) {
+              const role = email === 'root@admin.com' ? 'admin' : 'user';
+              const success = await updateProfile(id, email || '', role);
+              
+              if (success) {
+                setUser({
+                  id,
+                  email: email || '',
+                  role: role
+                });
+                return;
+              }
+            }
+            
             toast({
               title: "Erro ao carregar perfil",
               description: "Não foi possível carregar suas informações de perfil.",
@@ -42,11 +95,22 @@ export const useAuth = () => {
             return;
           }
           
-          setUser({
-            id,
-            email: email || '',
-            role: profileData?.role || 'user'
-          });
+          // Verifica se o email é do admin e atualiza a role se necessário
+          if (email === 'root@admin.com' && profileData.role !== 'admin') {
+            await updateProfile(id, email, 'admin');
+            
+            setUser({
+              id,
+              email: email || '',
+              role: 'admin'
+            });
+          } else {
+            setUser({
+              id,
+              email: email || '',
+              role: profileData?.role || 'user'
+            });
+          }
           
           console.log("Usuário carregado:", { id, email, role: profileData?.role });
         }
@@ -66,6 +130,12 @@ export const useAuth = () => {
       if (event === 'SIGNED_IN' && session) {
         const { id, email } = session.user;
         
+        // Verificar se é o email admin
+        const isAdmin = email === 'root@admin.com';
+        
+        // Buscar ou criar perfil
+        let userRole = 'user';
+        
         // Buscar role do usuário
         const { data: profileData, error: profileError } = await supabase
           .from('profiles')
@@ -75,12 +145,27 @@ export const useAuth = () => {
           
         if (profileError) {
           console.error("Erro ao buscar perfil após login:", profileError);
+          
+          // Se o perfil não for encontrado, tentar criar
+          if (profileError.message.includes('No rows found')) {
+            const role = isAdmin ? 'admin' : 'user';
+            await updateProfile(id, email || '', role);
+            userRole = role;
+          }
+        } else {
+          userRole = profileData.role;
+          
+          // Se é o email admin mas a role não é admin, atualizar
+          if (isAdmin && userRole !== 'admin') {
+            await updateProfile(id, email || '', 'admin');
+            userRole = 'admin';
+          }
         }
         
         setUser({
           id,
           email: email || '',
-          role: profileData?.role || 'user'
+          role: userRole
         });
         
         toast({
@@ -127,8 +212,8 @@ export const useAuth = () => {
       
       console.log("Tentando login com:", email);
       
-      // Versão para desenvolvimento e login de admin
-      if (email === 'root@admin.com' && password === '148750') {
+      // Caso especial para o administrador
+      if (email === 'root@admin.com') {
         console.log("Tentando login de administrador");
         
         // Verificar se o usuário já existe
@@ -155,43 +240,42 @@ export const useAuth = () => {
               return;
             }
             
-            // Forçar a definição do papel como admin
-            const { error: updateError } = await supabase
-              .from('profiles')
-              .upsert({ 
-                id: newUser?.user?.id, 
-                email: email,
-                role: 'admin',
-                created_at: new Date().toISOString(),
-                updated_at: new Date().toISOString()
+            // Garantir que o perfil do admin seja criado/atualizado
+            if (newUser?.user) {
+              const success = await updateProfile(newUser.user.id, email, 'admin');
+              
+              if (!success) {
+                toast({
+                  title: "Erro ao configurar perfil admin",
+                  description: "Conta criada, mas houve problema ao definir permissões de administrador.",
+                  variant: "destructive",
+                });
+                return;
+              }
+              
+              // Login automático
+              const { data, error } = await supabase.auth.signInWithPassword({
+                email,
+                password
               });
               
-            if (updateError) {
-              console.error("Erro ao definir papel de admin:", updateError);
-            }
-            
-            // Logar novamente após a criação
-            const { data, error } = await supabase.auth.signInWithPassword({
-              email,
-              password
-            });
-            
-            if (error) {
-              throw error;
-            }
-            
-            if (data?.user) {
-              setUser({
-                id: data.user.id,
-                email: data.user.email || '',
-                role: 'admin'
-              });
+              if (error) {
+                throw error;
+              }
               
-              navigate("/home");
-              toast({
-                title: "Login de administrador realizado",
-                description: "Bem-vindo, Administrador!",
-              });
+              if (data?.user) {
+                setUser({
+                  id: data.user.id,
+                  email: data.user.email || '',
+                  role: 'admin'
+                });
+                
+                navigate("/home");
+                toast({
+                  title: "Login de administrador realizado",
+                  description: "Bem-vindo, Administrador!",
+                });
+              }
             }
           } else {
             toast({
@@ -201,18 +285,15 @@ export const useAuth = () => {
             });
           }
         } else if (existingUser?.user) {
-          // Forçar a verificação e atualização do papel para admin
-          const { error: updateError } = await supabase
-            .from('profiles')
-            .upsert({ 
-              id: existingUser.user.id, 
-              email: email,
-              role: 'admin',
-              updated_at: new Date().toISOString()
+          // Garantir que o admin tenha role de admin
+          const success = await updateProfile(existingUser.user.id, email, 'admin');
+          
+          if (!success) {
+            toast({
+              title: "Erro ao confirmar permissões",
+              description: "Login realizado, mas houve problema ao verificar permissões de administrador.",
+              variant: "destructive",
             });
-            
-          if (updateError) {
-            console.error("Erro ao atualizar papel de admin:", updateError);
           }
           
           setUser({
@@ -272,14 +353,23 @@ export const useAuth = () => {
           .eq('id', data.user.id)
           .single();
           
+        let userRole = 'user';
+        
         if (profileError) {
           console.error("Erro ao buscar perfil após login:", profileError);
+          
+          // Se o perfil não existir, criar
+          if (profileError.message.includes('No rows found')) {
+            await updateProfile(data.user.id, data.user.email || '');
+          }
+        } else {
+          userRole = profileData.role;
         }
         
         setUser({
           id: data.user.id,
           email: data.user.email || '',
-          role: profileData?.role || 'user'
+          role: userRole
         });
         
         navigate("/home");

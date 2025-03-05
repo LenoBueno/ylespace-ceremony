@@ -1,8 +1,8 @@
 
-// Esse arquivo re-exporta a funcionalidade de toast do componente da UI
+// This file re-exports toast functionality
 import * as React from "react";
 
-// Define tipos diretamente aqui
+// Define types directly here
 export type ToastProps = {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
