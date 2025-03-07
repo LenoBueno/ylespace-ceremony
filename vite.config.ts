@@ -11,11 +11,14 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    // Remove the componentTagger that's causing ESM loading issues
   ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+  },
+  build: {
+    outDir: "dist",
+    sourcemap: true,
   },
 }));
