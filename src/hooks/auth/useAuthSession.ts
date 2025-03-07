@@ -149,5 +149,5 @@ export const useAuthSession = (
       // Clean up listener
       authListener.subscription.unsubscribe();
     };
-  }, [setUser, setLoading]); // Adicionando dependências corretas ao useEffect
+  }, [setUser, setLoading]); // Adding correct dependencies to useEffect
 };

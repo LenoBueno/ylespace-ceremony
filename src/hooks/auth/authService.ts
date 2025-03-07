@@ -95,7 +95,7 @@ const handleEmailConfirmationError = async (email: string): Promise<void> => {
   toast({
     title: "Email não confirmado",
     description: "Um novo email de confirmação foi enviado. Por favor, verifique sua caixa de entrada.",
-    variant: "default", // Using default variant as warning is not available
+    variant: "default", // Changed from "warning" to "default" as "warning" is not available
   });
 };
 
