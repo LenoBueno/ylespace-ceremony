@@ -1,8 +1,12 @@
 
+import type { Database } from "../../integrations/supabase/types";
+
+export type UserRole = Database["public"]["Enums"]["user_role"];
+
 export interface User {
   id: string;
   email: string;
-  role: string;
+  role: UserRole;
 }
 
 export interface AuthState {
