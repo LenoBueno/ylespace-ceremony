@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { supabase } from "../../integrations/supabase/client";
 import { toast } from "../../hooks/use-toast";
 import { updateProfile, fetchUserProfile } from "./profileUtils";
-import { User } from "./types";
+import { User, UserRole } from "./types";
 
 /**
  * Hook for managing authentication session
@@ -30,7 +30,7 @@ export const useAuthSession = (
             
             // Profile not found, create it
             const isAdmin = email === 'root@admin.com';
-            const role = isAdmin ? 'admin' : 'user';
+            const role: UserRole = isAdmin ? 'admin' : 'user';
             const success = await updateProfile(id, email || '', role);
             
             if (success) {
@@ -75,6 +75,8 @@ export const useAuthSession = (
       } catch (error) {
         console.error("Erro ao verificar sessão:", error);
         setUser(null);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -91,7 +93,7 @@ export const useAuthSession = (
         const isAdmin = email === 'root@admin.com';
         
         // Fetch or create profile
-        let userRole = 'user';
+        let userRole: UserRole = 'user';
         
         // Fetch user role
         const profileData = await fetchUserProfile(id);
@@ -100,7 +102,7 @@ export const useAuthSession = (
           console.error("Erro ao buscar perfil após login");
           
           // Create profile if not found
-          const role = isAdmin ? 'admin' : 'user';
+          const role: UserRole = isAdmin ? 'admin' : 'user';
           await updateProfile(id, email || '', role);
           userRole = role;
         } else {

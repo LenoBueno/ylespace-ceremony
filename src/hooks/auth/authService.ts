@@ -17,7 +17,7 @@ export const login = async (email: string, password: string): Promise<User | nul
       console.error("Erro de autenticação:", error);
       
       // Handle specific error cases
-      if (error.message === "Email not confirmed") {
+      if (error.message.includes("Email not confirmed")) {
         // Send a new confirmation email
         const { error: resendError } = await supabase.auth.resend({
           type: 'signup',
@@ -34,6 +34,15 @@ export const login = async (email: string, password: string): Promise<User | nul
           variant: "destructive",
         });
         
+        return null;
+      }
+      
+      if (error.message.includes("Invalid login credentials")) {
+        toast({
+          title: "Credenciais inválidas",
+          description: "Email ou senha incorretos. Tente novamente.",
+          variant: "destructive",
+        });
         return null;
       }
       

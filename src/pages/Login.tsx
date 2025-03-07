@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useAuth } from "@/hooks/auth";
 import { Input } from "@/components/ui/input";
@@ -205,15 +206,6 @@ const Login = () => {
                 <Button type="submit" className="w-full" disabled={loading || authLoading}>
                   {loading ? "Entrando..." : "Entrar"}
                 </Button>
-                
-                {/* Credenciais Admin para desenvolvimento */}
-                {process.env.NODE_ENV === 'development' && (
-                  <div className="mt-4 p-3 bg-gray-100 rounded-md text-sm">
-                    <p className="font-semibold mb-1">Credenciais de Admin (DEV):</p>
-                    <p>Email: root@admin.com</p>
-                    <p>Senha: 148750</p>
-                  </div>
-                )}
               </form>
             </TabsContent>
             
