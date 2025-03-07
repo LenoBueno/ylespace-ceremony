@@ -3,6 +3,9 @@ import { useAuthState } from "./useAuthState";
 import { useAuthSession } from "./useAuthSession";
 import { useAuthActions } from "./useAuthActions";
 
+/**
+ * Main authentication hook that composes other auth hooks
+ */
 export const useAuth = () => {
   const { user, loading, isAdmin, setUser, setLoading } = useAuthState();
   

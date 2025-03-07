@@ -17,7 +17,13 @@ export const useAuthSession = (
     const checkSession = async () => {
       try {
         setLoading(true);
-        const { data } = await supabase.auth.getSession();
+        const { data, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error("Erro ao buscar sessão:", error);
+          setUser(null);
+          return;
+        }
         
         if (data?.session?.user) {
           const { id, email } = data.session.user;
@@ -26,7 +32,7 @@ export const useAuthSession = (
           const profileData = await fetchUserProfile(id);
             
           if (!profileData) {
-            console.error("Perfil não encontrado");
+            console.log("Perfil não encontrado, criando novo perfil");
             
             // Profile not found, create it
             const isAdmin = email === 'root@admin.com';
@@ -37,7 +43,7 @@ export const useAuthSession = (
               setUser({
                 id,
                 email: email || '',
-                role: role
+                role
               });
               return;
             }
@@ -87,6 +93,7 @@ export const useAuthSession = (
       console.log("Auth state changed:", event, session?.user?.id);
       
       if (event === 'SIGNED_IN' && session) {
+        setLoading(true);
         const { id, email } = session.user;
         
         // Check if admin email
@@ -99,7 +106,7 @@ export const useAuthSession = (
         const profileData = await fetchUserProfile(id);
           
         if (!profileData) {
-          console.error("Erro ao buscar perfil após login");
+          console.log("Perfil não encontrado após login, criando novo perfil");
           
           // Create profile if not found
           const role: UserRole = isAdmin ? 'admin' : 'user';
@@ -125,6 +132,8 @@ export const useAuthSession = (
           title: "Login realizado com sucesso",
           description: "Bem-vindo de volta!",
         });
+        
+        setLoading(false);
       } else if (event === 'SIGNED_OUT') {
         setUser(null);
         toast({

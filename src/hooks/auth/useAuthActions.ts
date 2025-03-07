@@ -22,12 +22,15 @@ export const useAuthActions = (
       if (user) {
         setUser(user);
         navigate("/home");
+        return true;
       } else {
         setLoading(false);
+        return false;
       }
     } catch (error: any) {
       console.error("Erro de login no hook:", error);
       setLoading(false);
+      return false;
     }
   };
 
@@ -42,7 +45,7 @@ export const useAuthActions = (
     } catch (error: any) {
       console.error("Erro de registro no hook:", error);
       setLoading(false);
-      return null;
+      return false;
     }
   };
 
@@ -55,12 +58,15 @@ export const useAuthActions = (
       if (success) {
         setUser(null);
         navigate("/login");
+        return true;
       } else {
         setLoading(false);
+        return false;
       }
     } catch (error) {
       console.error("Erro ao fazer logout no hook:", error);
       setLoading(false);
+      return false;
     }
   };
 

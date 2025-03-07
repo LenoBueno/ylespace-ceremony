@@ -11,7 +11,7 @@ import { Eye, EyeOff, AlertCircle, Info } from "lucide-react";
 const Login = () => {
   const { login, register, loading: authLoading } = useAuth();
   const { toast } = useToast();
-  const [loading, setLoading] = useState(false);
+  const [formLoading, setFormLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [credentials, setCredentials] = useState({
@@ -53,7 +53,7 @@ const Login = () => {
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validar campos
+    // Validate fields
     const emailError = validateEmail(credentials.email);
     const passwordError = validatePassword(credentials.password);
     
@@ -67,21 +67,20 @@ const Login = () => {
       return;
     }
     
-    setLoading(true);
+    setFormLoading(true);
     try {
       await login(credentials.email, credentials.password);
     } catch (error: any) {
       console.error("Login error:", error);
-      // Toast exibido pelo hook useAuth
     } finally {
-      setLoading(false);
+      setFormLoading(false);
     }
   };
 
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validar campos
+    // Validate fields
     const emailError = validateEmail(registrationData.email);
     const passwordError = validatePassword(registrationData.password);
     const confirmPasswordError = validateConfirmPassword(
@@ -100,7 +99,7 @@ const Login = () => {
       return;
     }
     
-    setLoading(true);
+    setFormLoading(true);
     try {
       const result = await register(registrationData.email, registrationData.password);
       if (result) {
@@ -112,9 +111,8 @@ const Login = () => {
       }
     } catch (error: any) {
       console.error("Registration error:", error);
-      // Toast exibido pelo hook useAuth
     } finally {
-      setLoading(false);
+      setFormLoading(false);
     }
   };
 
@@ -162,7 +160,7 @@ const Login = () => {
                         });
                       }}
                       className={validationErrors.loginEmail ? "border-red-500" : ""}
-                      disabled={loading}
+                      disabled={formLoading || authLoading}
                     />
                     <ErrorMessage message={validationErrors.loginEmail} />
                   </div>
@@ -182,7 +180,7 @@ const Login = () => {
                           });
                         }}
                         className={validationErrors.loginPassword ? "border-red-500 pr-10" : "pr-10"}
-                        disabled={loading}
+                        disabled={formLoading || authLoading}
                       />
                       <button
                         type="button"
@@ -203,8 +201,8 @@ const Login = () => {
                   </div>
                 </div>
                 
-                <Button type="submit" className="w-full" disabled={loading || authLoading}>
-                  {loading ? "Entrando..." : "Entrar"}
+                <Button type="submit" className="w-full" disabled={formLoading || authLoading}>
+                  {formLoading ? "Entrando..." : "Entrar"}
                 </Button>
               </form>
             </TabsContent>
@@ -225,7 +223,7 @@ const Login = () => {
                         });
                       }}
                       className={validationErrors.registerEmail ? "border-red-500" : ""}
-                      disabled={loading}
+                      disabled={formLoading || authLoading}
                     />
                     <ErrorMessage message={validationErrors.registerEmail} />
                   </div>
@@ -245,7 +243,7 @@ const Login = () => {
                           });
                         }}
                         className={validationErrors.registerPassword ? "border-red-500 pr-10" : "pr-10"}
-                        disabled={loading}
+                        disabled={formLoading || authLoading}
                       />
                       <button
                         type="button"
@@ -273,7 +271,7 @@ const Login = () => {
                           });
                         }}
                         className={validationErrors.confirmPassword ? "border-red-500 pr-10" : "pr-10"}
-                        disabled={loading}
+                        disabled={formLoading || authLoading}
                       />
                       <button
                         type="button"
@@ -286,8 +284,8 @@ const Login = () => {
                     <ErrorMessage message={validationErrors.confirmPassword} />
                   </div>
                 </div>
-                <Button type="submit" className="w-full" disabled={loading || authLoading}>
-                  {loading ? "Registrando..." : "Registrar"}
+                <Button type="submit" className="w-full" disabled={formLoading || authLoading}>
+                  {formLoading ? "Registrando..." : "Registrar"}
                 </Button>
               </form>
             </TabsContent>
