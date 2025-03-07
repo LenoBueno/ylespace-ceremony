@@ -76,27 +76,38 @@ export const login = async (email: string, password: string): Promise<User | nul
  * Handles email confirmation error by resending confirmation email
  */
 const handleEmailConfirmationError = async (email: string): Promise<void> => {
-  // Send a new confirmation email
-  const { error: resendError } = await supabase.auth.resend({
-    type: 'signup',
-    email: email,
-  });
-  
-  if (resendError) {
-    console.error("Erro ao reenviar email de confirmação:", resendError);
+  try {
+    console.log("Reenviando email de confirmação para:", email);
+    
+    // Send a new confirmation email
+    const { error: resendError } = await supabase.auth.resend({
+      type: 'signup',
+      email: email,
+    });
+    
+    if (resendError) {
+      console.error("Erro ao reenviar email de confirmação:", resendError);
+      toast({
+        title: "Erro ao reenviar email",
+        description: resendError.message,
+        variant: "destructive",
+      });
+      return;
+    }
+    
     toast({
-      title: "Erro ao reenviar email",
-      description: resendError.message,
+      title: "Email não confirmado",
+      description: "Um novo email de confirmação foi enviado. Por favor, verifique sua caixa de entrada.",
+      variant: "default", // Default variant
+    });
+  } catch (error: any) {
+    console.error("Erro ao reenviar email:", error);
+    toast({
+      title: "Erro",
+      description: error.message || "Erro ao processar solicitação",
       variant: "destructive",
     });
-    return;
   }
-  
-  toast({
-    title: "Email não confirmado",
-    description: "Um novo email de confirmação foi enviado. Por favor, verifique sua caixa de entrada.",
-    variant: "default", // Changed from "warning" to "default" as "warning" is not available
-  });
 };
 
 /**
@@ -104,6 +115,8 @@ const handleEmailConfirmationError = async (email: string): Promise<void> => {
  */
 export const register = async (email: string, password: string): Promise<boolean> => {
   try {
+    console.log("Registrando novo usuário:", email);
+    
     // For admin account (root@admin.com), special handling
     const isAdmin = email === 'root@admin.com';
     

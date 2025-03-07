@@ -142,6 +142,9 @@ export const useAuthSession = (
           title: "Logout realizado",
           description: "Sessão encerrada com sucesso.",
         });
+      } else {
+        // Garantir que setLoading(false) seja chamado para outros eventos
+        setLoading(false);
       }
     });
 
@@ -149,5 +152,5 @@ export const useAuthSession = (
       // Clean up listener
       authListener.subscription.unsubscribe();
     };
-  }, [setUser, setLoading]); // Adding correct dependencies to useEffect
+  }, [setUser, setLoading]);
 };
