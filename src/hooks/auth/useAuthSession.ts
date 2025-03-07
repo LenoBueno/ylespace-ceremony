@@ -16,12 +16,12 @@ export const useAuthSession = (
     // Check current user session
     const checkSession = async () => {
       try {
-        setLoading(true);
         const { data, error } = await supabase.auth.getSession();
         
         if (error) {
           console.error("Erro ao buscar sessão:", error);
           setUser(null);
+          setLoading(false);
           return;
         }
         
@@ -45,6 +45,7 @@ export const useAuthSession = (
                 email: email || '',
                 role
               });
+              setLoading(false);
               return;
             }
             
@@ -54,6 +55,7 @@ export const useAuthSession = (
               variant: "destructive",
             });
             setUser(null);
+            setLoading(false);
             return;
           }
           
@@ -78,10 +80,10 @@ export const useAuthSession = (
         } else {
           setUser(null);
         }
+        setLoading(false);
       } catch (error) {
         console.error("Erro ao verificar sessão:", error);
         setUser(null);
-      } finally {
         setLoading(false);
       }
     };
@@ -147,5 +149,5 @@ export const useAuthSession = (
       // Clean up listener
       authListener.subscription.unsubscribe();
     };
-  }, [setUser, setLoading]);
+  }, [setUser, setLoading]); // Adicionando dependências corretas ao useEffect
 };

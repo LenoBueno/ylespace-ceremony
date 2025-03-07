@@ -1,17 +1,23 @@
 
 // This file re-exports from the hooks folder to maintain compatibility
 import { 
-  type ToastProps,
-  type ToastActionElement,
   useToast,
   toast,
   reducer
 } from "../../hooks/use-toast";
 
-export { 
+import type { 
   ToastProps,
-  ToastActionElement,
+  ToastActionElement 
+} from "../../hooks/use-toast";
+
+export { 
   useToast,
   toast,
   reducer
+};
+
+export type {
+  ToastProps,
+  ToastActionElement
 };
