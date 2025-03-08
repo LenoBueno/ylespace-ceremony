@@ -1,9 +1,8 @@
 
 import { useEffect } from "react";
-import { supabase } from "../../integrations/supabase/client";
-import { toast } from "../../hooks/use-toast";
-import { updateProfile, fetchUserProfile } from "./profileUtils";
-import { User, UserRole } from "./types";
+import { useSessionCheck } from "./session/useSessionCheck";
+import { useAuthStateListener } from "./session/useAuthStateListener";
+import { User } from "./types";
 
 /**
  * Hook for managing authentication session
@@ -14,139 +13,10 @@ export const useAuthSession = (
 ) => {
   useEffect(() => {
     // Check current user session
-    const checkSession = async () => {
-      try {
-        const { data, error } = await supabase.auth.getSession();
-        
-        if (error) {
-          console.error("Erro ao buscar sessão:", error);
-          setUser(null);
-          setLoading(false);
-          return;
-        }
-        
-        if (data?.session?.user) {
-          const { id, email } = data.session.user;
-          
-          // Fetch user profile
-          const profileData = await fetchUserProfile(id);
-            
-          if (!profileData) {
-            console.log("Perfil não encontrado, criando novo perfil");
-            
-            // Profile not found, create it
-            const isAdmin = email === 'root@admin.com';
-            const role: UserRole = isAdmin ? 'admin' : 'user';
-            const success = await updateProfile(id, email || '', role);
-            
-            if (success) {
-              setUser({
-                id,
-                email: email || '',
-                role
-              });
-              setLoading(false);
-              return;
-            }
-            
-            toast({
-              title: "Erro ao carregar perfil",
-              description: "Não foi possível carregar suas informações de perfil.",
-              variant: "destructive",
-            });
-            setUser(null);
-            setLoading(false);
-            return;
-          }
-          
-          // Check if admin email and update role if needed
-          if (email === 'root@admin.com' && profileData.role !== 'admin') {
-            await updateProfile(id, email || '', 'admin');
-            
-            setUser({
-              id,
-              email: email || '',
-              role: 'admin'
-            });
-          } else {
-            setUser({
-              id,
-              email: email || '',
-              role: profileData?.role || 'user'
-            });
-          }
-          
-          console.log("Usuário carregado:", { id, email, role: profileData?.role });
-        } else {
-          setUser(null);
-        }
-        setLoading(false);
-      } catch (error) {
-        console.error("Erro ao verificar sessão:", error);
-        setUser(null);
-        setLoading(false);
-      }
-    };
-
-    checkSession();
+    useSessionCheck(setUser, setLoading);
 
     // Set up auth state change listener
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log("Auth state changed:", event, session?.user?.id);
-      
-      if (event === 'SIGNED_IN' && session) {
-        setLoading(true);
-        const { id, email } = session.user;
-        
-        // Check if admin email
-        const isAdmin = email === 'root@admin.com';
-        
-        // Fetch or create profile
-        let userRole: UserRole = 'user';
-        
-        // Fetch user role
-        const profileData = await fetchUserProfile(id);
-          
-        if (!profileData) {
-          console.log("Perfil não encontrado após login, criando novo perfil");
-          
-          // Create profile if not found
-          const role: UserRole = isAdmin ? 'admin' : 'user';
-          await updateProfile(id, email || '', role);
-          userRole = role;
-        } else {
-          userRole = profileData.role;
-          
-          // Update to admin role if needed
-          if (isAdmin && userRole !== 'admin') {
-            await updateProfile(id, email || '', 'admin');
-            userRole = 'admin';
-          }
-        }
-        
-        setUser({
-          id,
-          email: email || '',
-          role: userRole
-        });
-        
-        toast({
-          title: "Login realizado com sucesso",
-          description: "Bem-vindo de volta!",
-        });
-        
-        setLoading(false);
-      } else if (event === 'SIGNED_OUT') {
-        setUser(null);
-        toast({
-          title: "Logout realizado",
-          description: "Sessão encerrada com sucesso.",
-        });
-      } else {
-        // Garantir que setLoading(false) seja chamado para outros eventos
-        setLoading(false);
-      }
-    });
+    const { data: authListener } = useAuthStateListener(setUser, setLoading);
 
     return () => {
       // Clean up listener
