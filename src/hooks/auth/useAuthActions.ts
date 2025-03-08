@@ -1,7 +1,7 @@
 
 import { useNavigate } from "react-router-dom";
 import { toast } from "../../hooks/use-toast";
-import { login as loginService, logout as logoutService, register as registerService } from "./authService";
+import { login as loginService, logout as logoutService, register as registerService } from "./services";
 import { User } from "./types";
 
 /**
