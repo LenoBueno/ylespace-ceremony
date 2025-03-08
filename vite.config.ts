@@ -2,7 +2,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-// Removendo a importação do componentTagger que está causando problemas de ESM
+// Removendo a importação do componentTagger para evitar problemas de ESM
 
 export default defineConfig(({ mode }) => ({
   server: {
@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    // Removendo o componentTagger temporariamente
+    // Plugin componentTagger removido temporariamente
   ],
   resolve: {
     alias: {
@@ -22,5 +22,11 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: "dist",
     sourcemap: true,
+    // Configuração para garantir que o TypeScript possa gerar os arquivos .d.ts
+    rollupOptions: {
+      output: {
+        preserveModules: true
+      }
+    }
   },
 }));
