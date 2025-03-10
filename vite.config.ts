@@ -23,7 +23,11 @@ export default defineConfig(async ({ mode }) => {
       allowedHosts: ["3a861138-84be-4650-84c5-82f3f7357797.lovableproject.com", "*.lovableproject.com"],
     },
     plugins: [
-      react(),
+      react({
+        tsDecorators: true,
+        // Enable JSX in .tsx files
+        include: "**/*.{tsx,jsx,ts,js}",
+      }),
       componentTaggerPlugin,
     ].filter(Boolean),
     resolve: {
