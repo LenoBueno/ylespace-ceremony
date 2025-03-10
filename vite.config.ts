@@ -9,8 +9,8 @@ export default defineConfig(async ({ mode }) => {
   let componentTaggerPlugin = null;
   if (mode === 'development') {
     try {
-      const lovableTagger = await import('lovable-tagger');
-      componentTaggerPlugin = lovableTagger.componentTagger();
+      const { componentTagger } = await import('lovable-tagger');
+      componentTaggerPlugin = componentTagger();
     } catch (error) {
       console.warn('Could not load lovable-tagger, continuing without it');
     }
