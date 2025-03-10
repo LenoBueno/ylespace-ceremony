@@ -20,7 +20,9 @@ export const useAuthSession = (
 
     return () => {
       // Clean up listener
-      authListener.subscription.unsubscribe();
+      if (authListener && authListener.subscription) {
+        authListener.subscription.unsubscribe();
+      }
     };
   }, [setUser, setLoading]);
 };
