@@ -16,7 +16,23 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseKey, {
   }
 });
 
-// Add error logging
+// Add more detailed error logging
 supabase.auth.onAuthStateChange((event, session) => {
   console.log('Supabase auth state changed:', event, session?.user?.id);
 });
+
+// Add a debug function to test connection
+export const testSupabaseConnection = async () => {
+  try {
+    const { data, error } = await supabase.from('profiles').select('count');
+    if (error) {
+      console.error('Supabase connection test failed:', error);
+      return false;
+    }
+    console.log('Supabase connection successful');
+    return true;
+  } catch (error) {
+    console.error('Supabase connection error:', error);
+    return false;
+  }
+};
