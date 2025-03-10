@@ -18,9 +18,10 @@ export const useAuthSession = (
     // Set up auth state change listener
     const { data: authListener } = useAuthStateListener(setUser, setLoading);
 
+    // Clean up function
     return () => {
-      // Clean up listener
-      if (authListener && authListener.subscription) {
+      // Safely clean up listener with optional chaining
+      if (authListener?.subscription) {
         authListener.subscription.unsubscribe();
       }
     };
