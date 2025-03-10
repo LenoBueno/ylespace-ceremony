@@ -1,14 +1,11 @@
 
-// This file re-exports from the hooks folder to maintain compatibility
+// Re-export da implementação original do toast
 import { 
   useToast,
   toast,
-  reducer
-} from "../../hooks/use-toast";
-
-import type { 
+  reducer,
   ToastProps,
-  ToastActionElement 
+  ToastActionElement
 } from "../../hooks/use-toast";
 
 export { 
