@@ -14,8 +14,9 @@
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": false,
-    "declarationDir": "./dist/types"
+    "declarationDir": "./dist/types",
+    "jsx": "react-jsx"
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["src/**/*.test.ts", "src/**/*.d.ts", "node_modules", "dist"]
 }
