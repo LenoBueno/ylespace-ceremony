@@ -9,15 +9,17 @@ interface AnimatedBackgroundProps {
 const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ children, className = '' }) => {
   return (
     <div 
-      className={`min-h-screen w-full relative flex items-center justify-center ${className}`}
+      className={`min-h-screen w-full relative flex items-center justify-center overflow-hidden ${className}`}
       style={{
         backgroundImage: 'url(/animated-dots-bg.svg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed'
       }}
     >
-      {children}
+      <div className="absolute inset-0 z-0"></div>
+      <div className="z-10 w-full">{children}</div>
     </div>
   );
 };

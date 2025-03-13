@@ -42,3 +42,19 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Garantir que o fundo animado seja visível */
+[data-theme="light"] .animated-background,
+.animated-background {
+  background-color: transparent !important;
+}
+
+/* Ajustes para animações de fundo */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-in-out;
+}
