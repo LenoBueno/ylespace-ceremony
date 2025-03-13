@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useAuth } from "@/hooks/auth";
 import { Input } from "@/components/ui/input";
@@ -7,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Eye, EyeOff, AlertCircle, Info } from "lucide-react";
+import AnimatedBackground from "@/components/ui/animated-background";
 
 const Login = () => {
   const { login, register, loading: authLoading } = useAuth();
@@ -127,172 +127,175 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md animate-fadeIn">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-center text-2xl">
-            Ylê Axé Xangô & Oxum
-          </CardTitle>
-          <CardDescription className="text-center">
-            Sistema de Gerenciamento do Terreiro
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Tabs defaultValue="login" value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="login">Entrar</TabsTrigger>
-              <TabsTrigger value="register">Registrar</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="login">
-              <form onSubmit={handleLoginSubmit} className="space-y-4 mt-4">
-                <div className="space-y-2">
-                  <div className="relative">
-                    <Input
-                      type="email"
-                      placeholder="Email"
-                      value={credentials.email}
-                      onChange={(e) => {
-                        setCredentials({ ...credentials, email: e.target.value });
-                        setValidationErrors({
-                          ...validationErrors,
-                          loginEmail: ""
-                        });
-                      }}
-                      className={validationErrors.loginEmail ? "border-red-500" : ""}
-                      disabled={formLoading || authLoading}
-                    />
-                    <ErrorMessage message={validationErrors.loginEmail} />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="relative">
+    <AnimatedBackground>
+      <div className="flex items-center justify-center w-full px-4">
+        <Card className="w-full max-w-md animate-fadeIn bg-white/95 backdrop-blur-sm">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-center text-2xl">
+              Ylê Axé Xangô & Oxum
+            </CardTitle>
+            <CardDescription className="text-center">
+              Sistema de Gerenciamento do Terreiro
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Tabs defaultValue="login" value={activeTab} onValueChange={setActiveTab}>
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="login">Entrar</TabsTrigger>
+                <TabsTrigger value="register">Registrar</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="login">
+                <form onSubmit={handleLoginSubmit} className="space-y-4 mt-4">
+                  <div className="space-y-2">
                     <div className="relative">
                       <Input
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Senha"
-                        value={credentials.password}
+                        type="email"
+                        placeholder="Email"
+                        value={credentials.email}
                         onChange={(e) => {
-                          setCredentials({ ...credentials, password: e.target.value });
+                          setCredentials({ ...credentials, email: e.target.value });
                           setValidationErrors({
                             ...validationErrors,
-                            loginPassword: ""
+                            loginEmail: ""
                           });
                         }}
-                        className={validationErrors.loginPassword ? "border-red-500 pr-10" : "pr-10"}
+                        className={validationErrors.loginEmail ? "border-red-500" : ""}
                         disabled={formLoading || authLoading}
                       />
-                      <button
-                        type="button"
-                        className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                      </button>
+                      <ErrorMessage message={validationErrors.loginEmail} />
                     </div>
-                    <ErrorMessage message={validationErrors.loginPassword} />
                   </div>
-                </div>
-                
-                <div className="p-3 bg-blue-50 rounded-md text-sm">
-                  <div className="flex items-start">
-                    <Info className="h-5 w-5 mr-2 text-blue-500 flex-shrink-0 mt-0.5" />
-                    <p>Lembre-se de verificar seu email após o registro para ativar sua conta. Se não recebeu, tente fazer login novamente para reenviar.</p>
+                  
+                  <div className="space-y-2">
+                    <div className="relative">
+                      <div className="relative">
+                        <Input
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Senha"
+                          value={credentials.password}
+                          onChange={(e) => {
+                            setCredentials({ ...credentials, password: e.target.value });
+                            setValidationErrors({
+                              ...validationErrors,
+                              loginPassword: ""
+                            });
+                          }}
+                          className={validationErrors.loginPassword ? "border-red-500 pr-10" : "pr-10"}
+                          disabled={formLoading || authLoading}
+                        />
+                        <button
+                          type="button"
+                          className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
+                      </div>
+                      <ErrorMessage message={validationErrors.loginPassword} />
+                    </div>
                   </div>
-                </div>
-                
-                <Button type="submit" className="w-full" disabled={formLoading || authLoading}>
-                  {formLoading ? "Entrando..." : "Entrar"}
-                </Button>
-              </form>
-            </TabsContent>
-            
-            <TabsContent value="register">
-              <form onSubmit={handleRegisterSubmit} className="space-y-4 mt-4">
-                <div className="space-y-2">
-                  <div className="relative">
-                    <Input
-                      type="email"
-                      placeholder="Email"
-                      value={registrationData.email}
-                      onChange={(e) => {
-                        setRegistrationData({ ...registrationData, email: e.target.value });
-                        setValidationErrors({
-                          ...validationErrors,
-                          registerEmail: ""
-                        });
-                      }}
-                      className={validationErrors.registerEmail ? "border-red-500" : ""}
-                      disabled={formLoading || authLoading}
-                    />
-                    <ErrorMessage message={validationErrors.registerEmail} />
+                  
+                  <div className="p-3 bg-blue-50 rounded-md text-sm">
+                    <div className="flex items-start">
+                      <Info className="h-5 w-5 mr-2 text-blue-500 flex-shrink-0 mt-0.5" />
+                      <p>Lembre-se de verificar seu email após o registro para ativar sua conta. Se não recebeu, tente fazer login novamente para reenviar.</p>
+                    </div>
                   </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="relative">
+                  
+                  <Button type="submit" className="w-full" disabled={formLoading || authLoading}>
+                    {formLoading ? "Entrando..." : "Entrar"}
+                  </Button>
+                </form>
+              </TabsContent>
+              
+              <TabsContent value="register">
+                <form onSubmit={handleRegisterSubmit} className="space-y-4 mt-4">
+                  <div className="space-y-2">
                     <div className="relative">
                       <Input
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Senha"
-                        value={registrationData.password}
+                        type="email"
+                        placeholder="Email"
+                        value={registrationData.email}
                         onChange={(e) => {
-                          setRegistrationData({ ...registrationData, password: e.target.value });
+                          setRegistrationData({ ...registrationData, email: e.target.value });
                           setValidationErrors({
                             ...validationErrors,
-                            registerPassword: ""
+                            registerEmail: ""
                           });
                         }}
-                        className={validationErrors.registerPassword ? "border-red-500 pr-10" : "pr-10"}
+                        className={validationErrors.registerEmail ? "border-red-500" : ""}
                         disabled={formLoading || authLoading}
                       />
-                      <button
-                        type="button"
-                        className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                      </button>
+                      <ErrorMessage message={validationErrors.registerEmail} />
                     </div>
-                    <ErrorMessage message={validationErrors.registerPassword} />
                   </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="relative">
+                  <div className="space-y-2">
                     <div className="relative">
-                      <Input
-                        type={showConfirmPassword ? "text" : "password"}
-                        placeholder="Confirme a senha"
-                        value={registrationData.confirmPassword}
-                        onChange={(e) => {
-                          setRegistrationData({ ...registrationData, confirmPassword: e.target.value });
-                          setValidationErrors({
-                            ...validationErrors,
-                            confirmPassword: ""
-                          });
-                        }}
-                        className={validationErrors.confirmPassword ? "border-red-500 pr-10" : "pr-10"}
-                        disabled={formLoading || authLoading}
-                      />
-                      <button
-                        type="button"
-                        className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      >
-                        {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                      </button>
+                      <div className="relative">
+                        <Input
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Senha"
+                          value={registrationData.password}
+                          onChange={(e) => {
+                            setRegistrationData({ ...registrationData, password: e.target.value });
+                            setValidationErrors({
+                              ...validationErrors,
+                              registerPassword: ""
+                            });
+                          }}
+                          className={validationErrors.registerPassword ? "border-red-500 pr-10" : "pr-10"}
+                          disabled={formLoading || authLoading}
+                        />
+                        <button
+                          type="button"
+                          className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
+                      </div>
+                      <ErrorMessage message={validationErrors.registerPassword} />
                     </div>
-                    <ErrorMessage message={validationErrors.confirmPassword} />
                   </div>
-                </div>
-                <Button type="submit" className="w-full" disabled={formLoading || authLoading}>
-                  {formLoading ? "Registrando..." : "Registrar"}
-                </Button>
-              </form>
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
-    </div>
+                  <div className="space-y-2">
+                    <div className="relative">
+                      <div className="relative">
+                        <Input
+                          type={showConfirmPassword ? "text" : "password"}
+                          placeholder="Confirme a senha"
+                          value={registrationData.confirmPassword}
+                          onChange={(e) => {
+                            setRegistrationData({ ...registrationData, confirmPassword: e.target.value });
+                            setValidationErrors({
+                              ...validationErrors,
+                              confirmPassword: ""
+                            });
+                          }}
+                          className={validationErrors.confirmPassword ? "border-red-500 pr-10" : "pr-10"}
+                          disabled={formLoading || authLoading}
+                        />
+                        <button
+                          type="button"
+                          className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
+                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        >
+                          {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
+                      </div>
+                      <ErrorMessage message={validationErrors.confirmPassword} />
+                    </div>
+                  </div>
+                  <Button type="submit" className="w-full" disabled={formLoading || authLoading}>
+                    {formLoading ? "Registrando..." : "Registrar"}
+                  </Button>
+                </form>
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
+      </div>
+    </AnimatedBackground>
   );
 };
 

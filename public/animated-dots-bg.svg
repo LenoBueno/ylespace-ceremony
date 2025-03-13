@@ -1,0 +1,76 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="white"/>
+  
+  <!-- Dot 1 com movimento suave e aleatório -->
+  <circle r="2.5">
+    <animate attributeName="cx" values="100;300;200;400;250;100" dur="20s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+    <animate attributeName="cy" values="100;200;400;300;150;100" dur="20s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+  </circle>
+  
+  <!-- Dot 2 com tempo diferente -->
+  <circle r="2.5">
+    <animate attributeName="cx" values="700;500;650;400;550;700" dur="25s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+    <animate attributeName="cy" values="150;250;100;300;200;150" dur="25s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+  </circle>
+  
+  <!-- Dot 3 -->
+  <circle r="2.5">
+    <animate attributeName="cx" values="200;350;150;450;300;200" dur="22s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+    <animate attributeName="cy" values="450;350;550;400;500;450" dur="22s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+  </circle>
+  
+  <!-- Dot 4 -->
+  <circle r="2.5">
+    <animate attributeName="cx" values="600;500;700;400;550;600" dur="28s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+    <animate attributeName="cy" values="500;400;450;550;500;500" dur="28s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+  </circle>
+  
+  <!-- Dot 5 -->
+  <circle r="2.5">
+    <animate attributeName="cx" values="300;400;200;500;350;300" dur="23s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+    <animate attributeName="cy" values="250;150;300;200;100;250" dur="23s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+  </circle>
+  
+  <!-- Dot 6 -->
+  <circle r="2.5">
+    <animate attributeName="cx" values="500;600;400;700;550;500" dur="26s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+    <animate attributeName="cy" values="350;450;300;400;500;350" dur="26s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+  </circle>
+  
+  <!-- Dot 7 -->
+  <circle r="2.5">
+    <animate attributeName="cx" values="150;250;100;350;200;150" dur="24s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+    <animate attributeName="cy" values="300;200;350;250;400;300" dur="24s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+  </circle>
+  
+  <!-- Dot 8 -->
+  <circle r="2.5">
+    <animate attributeName="cx" values="650;550;700;500;600;650" dur="27s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+    <animate attributeName="cy" values="200;300;150;250;350;200" dur="27s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+  </circle>
+  
+  <!-- Dot 9 -->
+  <circle r="2.5">
+    <animate attributeName="cx" values="350;450;300;550;400;350" dur="21s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+    <animate attributeName="cy" values="500;400;550;450;350;500" dur="21s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+  </circle>
+  
+  <!-- Dot 10 -->
+  <circle r="2.5">
+    <animate attributeName="cx" values="400;300;450;250;350;400" dur="29s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+    <animate attributeName="cy" values="150;250;100;200;300;150" dur="29s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+  </circle>
+  
+  <!-- Dot 11 -->
+  <circle r="2.5">
+    <animate attributeName="cx" values="550;450;600;350;500;550" dur="30s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+    <animate attributeName="cy" values="400;500;350;450;550;400" dur="30s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+  </circle>
+  
+  <!-- Dot 12 -->
+  <circle r="2.5">
+    <animate attributeName="cx" values="250;350;200;450;300;250" dur="19s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+    <animate attributeName="cy" values="350;250;400;300;200;350" dur="19s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1"/>
+  </circle>
+</svg>
