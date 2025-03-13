@@ -19,7 +19,6 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": false,
     "sourceMap": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
