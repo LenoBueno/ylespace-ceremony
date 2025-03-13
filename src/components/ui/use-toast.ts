@@ -1,5 +1,5 @@
 
-// Re-export da implementação original do toast
+// Re-export from the core implementation to avoid circular dependencies
 import { 
   useToast,
   toast,

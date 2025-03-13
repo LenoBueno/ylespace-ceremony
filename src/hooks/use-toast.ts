@@ -1,5 +1,5 @@
 
-// Implementação completa do toast ao invés de importação circular
+// Standalone toast implementation to avoid circular dependencies
 import * as React from "react";
 
 export type ToastProps = {
