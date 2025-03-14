@@ -49,6 +49,15 @@ export const login = async (email: string, password: string): Promise<User | nul
   try {
     console.log("Tentando login com:", email);
     
+    // Log configuration before attempting login
+    console.log("Configuração do Supabase antes do login:", {
+      url: supabase.supabaseUrl,
+      hasKey: !!supabase.supabaseKey,
+      keyLength: supabase.supabaseKey?.length || 0,
+      authConfig: supabase.auth.autoRefreshToken,
+      storageKey: supabase.auth._persistSession ? "Config ativada" : "Config desativada"
+    });
+    
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -56,6 +65,8 @@ export const login = async (email: string, password: string): Promise<User | nul
 
     if (error) {
       console.error("Erro de autenticação:", error);
+      console.error("Código do erro:", error.status || "N/A");
+      console.error("Mensagem completa:", error.message);
       
       // Handle specific error cases
       if (error.message.includes("Email not confirmed")) {
@@ -90,8 +101,18 @@ export const login = async (email: string, password: string): Promise<User | nul
       return null;
     }
 
+    console.log("Usuário autenticado:", data.user.id);
+    console.log("Sessão criada:", !!data.session);
+
     // Fetch user profile to get role
     const profileData = await fetchUserProfile(data.user.id);
+    
+    if (!profileData) {
+      console.log("Perfil não encontrado, tentando criar um novo");
+    } else {
+      console.log("Perfil encontrado com role:", profileData.role);
+    }
+    
     const userRole: UserRole = profileData?.role || 'user';
 
     return {

@@ -31,11 +31,10 @@ supabase.auth.onAuthStateChange((event, session) => {
     console.log('Token refreshed');
   } else if (event === 'USER_UPDATED') {
     console.log('User updated');
-  } else if (event === 'USER_DELETED') {
-    console.log('User deleted');
   } else if (event === 'PASSWORD_RECOVERY') {
     console.log('Password recovery initiated');
   }
+  // Removed the invalid USER_DELETED comparison
 });
 
 // Add a debug function to test connection
