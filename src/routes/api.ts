@@ -1,7 +1,11 @@
 import express from 'express';
 import queries from '../database/queries';
+import authRoutes from './auth';
 
 const router = express.Router();
+
+// Usar rotas de autenticação
+router.use('/auth', authRoutes);
 
 // Rota para listar todos os perfis
 router.get('/perfis', async (req, res) => {
@@ -35,4 +39,4 @@ router.get('/ervas', async (req, res) => {
   }
 });
 
-export default router; 
+export default router;
