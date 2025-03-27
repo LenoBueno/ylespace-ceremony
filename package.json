@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "next start -H 0.0.0.0",
     "dev": "vite",
     "server": "ts-node -P tsconfig.server.json src/server.ts",
     "test:connection": "ts-node -P tsconfig.server.json src/database/testConnection.ts",
